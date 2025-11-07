@@ -3,6 +3,7 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
+from flask import send_from_directory, render_template
 load_dotenv()
 
 
@@ -18,7 +19,12 @@ with app.app_context():
 
 @app.route("/")
 def mainPage():
-    return "<h1>Hello world</h1>"
+    return render_template("main.html")
+
+
+@app.route('/assets/<path:filename>')
+def uploaded_file(filename):
+    return send_from_directory('assets', filename)
 
 
 if __name__ == "__main__":
