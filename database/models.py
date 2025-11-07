@@ -1,25 +1,11 @@
-import os
+
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timezone
 from nanoid import generate
-import pymysql
 
 # creating database first
+from . import creatingDatabase
 
-connection = pymysql.connect(
-    host=os.getenv("DB_HOST") or "localhost",
-    user=os.getenv("DB_USER") or "root",
-    password=os.getenv("DB_PASSWORD") or "root"
-)
-
-with connection.cursor() as cursor:
-    try:
-        cursor.execute(f'CREATE DATABASE IF NOT EXISTS {os.getenv("DB_NAME") or "evoting_flask_app_database"} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;')
-        print("Database creation succeed")
-    except pymysql.MySQLError as e:
-        print("Database creation failed")
-
-pymysql.install_as_MySQLdb()
 db = SQLAlchemy()
 
 nowUtc = datetime.now(timezone.utc)
