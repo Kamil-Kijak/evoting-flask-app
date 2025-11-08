@@ -1,0 +1,102 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --first-color:#cc0000;
+    --second-color:#2A2929;
+    --hover-second-color:#3C3C3C;
+}
+
+.flex {
+    display: flex;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+a {
+    color: inherit;
+}
+
+header nav {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: var(--first-color);
+    column-gap: .5rem;
+    color: white;
+}
+
+
+header nav .app-logo {
+    margin-left: 1.5rem;
+    margin-top: 1.5rem;
+    width: 40px;
+    height: 40px;
+}
+
+footer .copyright-section {
+    background-color: var(--first-color);
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+.copyright-section h2 {
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main .welcome-heading {
+    font-size: 2.5rem;
+    font-weight:800;
+    text-align: center;
+    color: var(--second-color);
+    margin-top: 2rem;
+}
+main .welcome-subtitle {
+    font-size: 1rem;
+    font-weight:800;
+    text-align: center;
+    color: var(--second-color);
+    margin-top: 2rem;
+}
+
+.primary-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--second-color);
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+}
+.primary-button:hover {
+    background-color: var(--hover-second-color);
+}
