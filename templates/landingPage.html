@@ -2,25 +2,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-
-<nav class="navbar" role="navigation">
-    <section style="justify-content:space-between;display:flex;width: 100%;align-items: center;">
-        <section class="flex-center">
-            <section class="app-logo" aria-label="application-logo">
-                <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
-            </section>
-            <h2 class="app-title">E-voting App</h2>
-        </section>
-        <section style="margin-right: 1rem;">
-            <button class="primary-button" aria-label="login-button">
-                <span style="font-size: x-large;" aria-hidden="true">
-                    Log in
-                </span>
-            </button>
-        </section>
-    </section>
-</nav>
-
+    {% include "navbar.html" %}
 {% endblock %}
 
 {% block main %}
@@ -33,11 +15,13 @@
     Register now, just by clicking the button below
 </p>
 <section style="margin: 2rem 0;">
-    <button class="primary-button" aria-label="register button">
-         <span style="font-size: 1.8rem;" aria-hidden="true">
-            Get start
-        </span>
-    </button>
+    <a href="{{ url_for('register_user') }}">
+        <button class="primary-button" aria-label="register button">
+            <span style="font-size: 1.8rem;" aria-hidden="true">
+                Get start
+            </span>
+        </button>
+    </a>
 </section>
 
 <p class="welcome-subtitle" aria-label="having-account-paragraph" style="font-size: 1.4rem;">

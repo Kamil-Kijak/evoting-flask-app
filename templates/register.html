@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block main %}
+<section style="margin-bottom: 2rem;">
+    <h1 class="secondary-box">User register</h1>
+</section>
+<form class="card" method="post">
+    <section class="input-group">
+        <p><i class="fa-solid fa-user"></i> name</p>
+        <input type="text" placeholder="e.g. Jan" required name="name" aria-label="name-input">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-user"></i> surname</p>
+        <input type="text" placeholder="e.g. Kowalski" required name="surname" aria-label="surname-input">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-envelope"></i> email</p>
+        <input type="text" placeholder="e.g. name@domain.com" required name="email" aria-label="email-input">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> password</p>
+        <input type="password" placeholder="new password" required name="password" aria-label="password-input">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> repeat password</p>
+        <input type="password" placeholder="repeat your password" required name="repeatedPassword" aria-label="repeat-password-input">
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" role="submit" aria-label="confirm">
+        <span style="font-size: 1.2rem;" aria-hidden="true">
+            Register
+        </span>
+    </button>
+</form>
+<a style="font-size: 1.1rem;margin-top: 2rem;" href="">
+    I have already an account
+</a>
+<a class="primary-button" style="margin-top: 2rem;" href="{{ url_for('welcome_page') }}">
+    <span style="font-size: 1.2rem;" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endblock %}

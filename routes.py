@@ -15,6 +15,10 @@ def mainPage():
 def welcome_page():
     return render_template("landingPage.html")
 
+@app.route("/register", methods=["GET", "POST"])
+def register_user():
+    return render_template("register.html")
+
 @app.route('/assets/<path:filename>')
 def uploaded_file(filename):
     return send_from_directory('assets', filename)
