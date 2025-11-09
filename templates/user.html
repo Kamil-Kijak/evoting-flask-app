@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    {% if not found %}
+        User not found - E-voting app
+    {% else %}
+        {% if permission %}
+            My profile - E-voting app
+        {% else %}
+            {{ user.name + " " + user.surname }} profile - E-voting app
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block header %}
+    {% include "components/navbar.html" %}
+{% endblock %}

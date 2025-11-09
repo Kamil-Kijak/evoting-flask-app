@@ -65,6 +65,17 @@ def login_user():
     else:
         return render_template("forms/login.html", values={})
     
+@app.route("/user/<id>", methods=["GET"])
+def user_data(id):
+    if session.get("idUser"):
+        user = db.session.query(User).filter(User.id == id).first()
+        if user:
+            return render_template("user.html", found=True, permission=user.id == id, user=user)
+        else:
+            return render_template("user.html", found=False)
+    else:
+        return render_template("main.html")
+
 @app.route("/logout")
 def logout_user():
     session.clear()

@@ -8,7 +8,7 @@
                         <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
                     </section>
                     <section class="flex-center" style="column-gap: 2rem;">
-                        <a href="{{ url_for('login_user')}}">
+                        <a href="{{ url_for('user_data', id=session.get('idUser'))}}">
                             <button class="primary-button" aria-label="login-button">
                                 <span style="font-size: x-large;" aria-hidden="true">
                                     Profile
