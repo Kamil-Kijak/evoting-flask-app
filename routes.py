@@ -1,11 +1,17 @@
 
-from flask import send_from_directory, render_template, session, redirect, url_for
+import bcrypt
+from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
+from validation import userSchema
+from marshmallow import ValidationError
+from database.models import User
+from database.models import db
+
 
 # endpoints
 
 @app.route("/")
-def mainPage():
+def main_page():
     if not session.get("idUser"):
         return redirect(url_for("welcome_page"))
     return render_template("base.html")
@@ -17,7 +23,31 @@ def welcome_page():
 
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
-    return render_template("register.html")
+    if request.method == "POST":
+        try:
+            data = request.form.to_dict()
+            userSchema.load(data)
+            # success
+            if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
+                return render_template("register.html", errors={"email":["This email is already taken"]}, values=data)
+            passwordBytes = str(data.get("password")).encode("utf-8")
+            salt = bcrypt.gensalt()
+            hash = bcrypt.hashpw(passwordBytes, salt)
+            newUser = User(
+                name=data.get("name").capitalize(),
+                surname=data.get("surname").capitalize(),
+                email=data.get("email"),
+                password=hash.decode()
+            )
+            db.session.add(newUser)
+            db.session.commit()
+            session["idUser"] = newUser.id
+            return redirect(url_for("main_page"))
+        except ValidationError as err:
+            return render_template("register.html", errors=err.messages, values=data)
+
+    else:
+        return render_template("register.html", values={})
 
 @app.route('/assets/<path:filename>')
 def uploaded_file(filename):

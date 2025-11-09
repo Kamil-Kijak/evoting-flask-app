@@ -33,7 +33,7 @@ class Vote(db.Model):
     endDate = db.Column(db.DateTime, nullable=True)
     description = db.Column(db.Text, nullable=False)
     realTimeResults = db.Column(db.Boolean, default=True, nullable=False)
-    options = db.relationship('voteOption', backref='vote', lazy=True)
+    options = db.relationship('VoteOption', backref='vote', lazy=True)
 
     def __repr__(self):
         return f"<Vote {self.title}>"
@@ -43,6 +43,7 @@ class VoteOption(db.Model):
     id = db.Column(db.String(21), primary_key=True, default=generateNanoId)
     idVote = db.Column(db.String(21), db.ForeignKey('vote.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
+    voting = db.relationship('Voting', backref='voteOption', lazy=True)
 
     def __repr__(self):
         return f"<VoteOption {self.name}>"

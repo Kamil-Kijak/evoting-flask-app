@@ -11,6 +11,7 @@
     --first-color:#cc0000;
     --second-color:#2A2929;
     --hover-second-color:#3C3C3C;
+    --error-background-color:#f19595;
 }
 
 .flex {
@@ -28,6 +29,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-x: hidden;
 }
 
 a {
@@ -150,4 +152,14 @@ main .welcome-subtitle {
     border-radius: 10px;
     border: 0;
     background-color: var(--first-color);
+}
+
+.error-message {
+    padding: .5rem;
+    background-color: var(--error-background-color);
+    color: var(--first-color);
+    font-weight: bold;
+    border: 3px solid var(--first-color);
+    border-radius: 5px;
+    margin: .5rem 0;
 }
