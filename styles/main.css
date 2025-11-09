@@ -53,6 +53,12 @@ header nav .app-logo {
     height: 40px;
 }
 
+header nav .id-heading {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
 footer .copyright-section {
     background-color: var(--first-color);
     width: 100%;

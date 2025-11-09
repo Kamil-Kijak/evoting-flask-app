@@ -1,0 +1,64 @@
+
+
+<nav class="navbar" role="navigation">
+    <section style="justify-content:space-between;display:flex;width: 100%;align-items: center;">
+        {% if session.get('idUser') %}
+                <section class="flex-center" style="column-gap: 2rem;">
+                    <section class="app-logo" aria-label="application-logo">
+                        <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
+                    </section>
+                    <section class="flex-center" style="column-gap: 2rem;">
+                        <a href="{{ url_for('login_user')}}">
+                            <button class="primary-button" aria-label="login-button">
+                                <span style="font-size: x-large;" aria-hidden="true">
+                                    Profile
+                                </span>
+                            </button>
+                        </a>
+                        <a href="{{ url_for('login_user')}}">
+                            <button class="primary-button" aria-label="login-button">
+                                <span style="font-size: x-large;" aria-hidden="true">
+                                    My votes
+                                </span>
+                            </button>
+                        </a>
+                        <a href="{{ url_for('main_page')}}">
+                            <button class="primary-button" aria-label="login-button">
+                                <span style="font-size: x-large;" aria-hidden="true">
+                                    Search votes
+                                </span>
+                            </button>
+                        </a>
+                    </section>
+                </section>
+                <section style="margin-right: 1rem">
+                    <span aria-label="idUser" class="id-heading">
+                        Your ID: {{ session.get('idUser') }}
+                    </span>
+                    <a href="{{ url_for('logout_user')}}">
+                        <button class="primary-button" aria-label="login-button">
+                            <span style="font-size: x-large;" aria-hidden="true">
+                                Logout
+                            </span>
+                        </button>
+                    </a>
+                </section>
+        {% else %}
+                <section class="flex-center">
+                    <section class="app-logo" aria-label="application-logo">
+                        <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
+                    </section>
+                    <h2 class="app-title">E-voting App</h2>
+                </section>
+                <section style="margin-right: 1rem;">
+                    <a href="{{ url_for('login_user')}}">
+                        <button class="primary-button" aria-label="login-button">
+                            <span style="font-size: x-large;" aria-hidden="true">
+                                Log in
+                            </span>
+                        </button>
+                    </a>
+                </section>
+        {% endif %}
+    </section>
+</nav>
