@@ -1,0 +1,37 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+    Changing E-mail
+{% endblock %}
+
+{% block main %}
+<section style="margin-bottom: 2rem;margin-top: 2rem;">
+    <h1 class="secondary-box">Changing email adress</h1>
+</section>
+<form class="card" method="post" style="width: 400px;">
+    <section class="input-group">
+        <p><i class="fa-solid fa-envelope"></i> Email</p>
+        <input type="email" placeholder="new Email" name="email" aria-label="email-input" value="{{ values.email }}">
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" role="submit" aria-label="confirm">
+        <span style="font-size: 1.2rem;" aria-hidden="true">
+            Change email adress
+        </span>
+    </button>
+    <section style="margin-top: 1rem;">
+        {% if errors %}
+            {% for value in errors.values() %}
+            <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
+            {% endfor %}
+        {% endif %}
+    </section>
+</form>
+<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('user_data', id=session.get('idUser')) }}">
+    <span style="font-size: 1.2rem;" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endblock %}

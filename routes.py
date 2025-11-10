@@ -77,14 +77,26 @@ def changing_password():
                 passwordBytes = str(data.get("password")).encode("utf-8")
                 salt = bcrypt.gensalt()
                 hash = bcrypt.hashpw(passwordBytes, salt)
-                db.session.query(User).filter(User.id == session.get("idUser")).update({User.password: hash.decode()})
+                db.session.query(User).filter(User.id == id).update({User.password: hash.decode()})
                 db.session.commit()
-                user = db.session.query(User).filter(User.id == session.get("idUser")).first()
-                return render_template("user.html", found=True, permission=user.id == session.get("idUser"), user=user, success="Changing password success")
+                user = db.session.query(User).filter(User.id == id).first()
+                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
             except ValidationError as err:
                 return render_template("forms/changePassword.html", errors=err.messages, values=data)
         else:
             return render_template("forms/changePassword.html", values={})
+    else:
+        return redirect(url_for("main_page"))
+    
+@app.route("/changing_email", methods=["GET", "POST"])
+def changing_email():
+    id = session.get("idUser")
+    if id:
+        if request.method == "POST":
+            pass
+        else:
+            user = db.session.query(User).filter(User.id == id).first()
+            return render_template("forms/changeEmail.html", values={"email":user.email})
     else:
         return redirect(url_for("main_page"))
     
