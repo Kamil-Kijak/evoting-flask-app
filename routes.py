@@ -2,7 +2,7 @@
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
-from validation import userSchema
+from validation import userSchema, changingPasswordSchema
 from marshmallow import ValidationError
 from database.models import User
 from database.models import db
@@ -65,6 +65,29 @@ def login_user():
     else:
         return render_template("forms/login.html", values={})
     
+@app.route("/changing_password", methods=["GET", "POST"])
+def changing_password():
+    id = session.get("idUser")
+    if id:
+        if request.method == "POST":
+            data = request.form.to_dict()
+            try:
+                changingPasswordSchema.load(data)
+                # valid data
+                passwordBytes = str(data.get("password")).encode("utf-8")
+                salt = bcrypt.gensalt()
+                hash = bcrypt.hashpw(passwordBytes, salt)
+                db.session.query(User).filter(User.id == session.get("idUser")).update({User.password: hash.decode()})
+                db.session.commit()
+                user = db.session.query(User).filter(User.id == session.get("idUser")).first()
+                return render_template("user.html", found=True, permission=user.id == session.get("idUser"), user=user, success="Changing password success")
+            except ValidationError as err:
+                return render_template("forms/changePassword.html", errors=err.messages, values=data)
+        else:
+            return render_template("forms/changePassword.html", values={})
+    else:
+        return redirect(url_for("main_page"))
+    
 @app.route("/user/<id>", methods=["GET"])
 def user_data(id):
     if session.get("idUser"):
@@ -74,7 +97,7 @@ def user_data(id):
         else:
             return render_template("user.html", found=False)
     else:
-        return render_template("main.html")
+        return redirect(url_for("main_page"))
 
 @app.route("/logout")
 def logout_user():

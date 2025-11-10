@@ -15,3 +15,14 @@ class UserSchema(Schema):
             raise ValidationError("Passwords must be the same", field_name="confirmPassword")
         
 userSchema = UserSchema()
+
+class ChangingPasswordSchema(Schema):
+    password = fields.String(required=True, validate=validate.Length(min=8, error="New password minimal length 8"), error_messages={"required":"New password is required"})
+    confirmPassword = fields.String(required=True, error_messages={"required":"ConfirmPassword is required"})
+
+    @validates_schema
+    def validate_passwords_match(self, data, **kwargs):
+        if data.get("password") != data.get("confirmPassword"):
+            raise ValidationError("Passwords must be the same", field_name="confirmPassword")
+        
+changingPasswordSchema = ChangingPasswordSchema()

@@ -12,6 +12,9 @@
     --second-color:#2A2929;
     --hover-second-color:#3C3C3C;
     --error-background-color:#f19595;
+
+    --success-color:#33A008;
+    --success-background-color:#98d580;
 }
 
 .flex {
@@ -142,6 +145,21 @@ main .welcome-subtitle {
     background-color: var(--hover-second-color);
 }
 
+.secondary-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 0;
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+.secondary-button:hover {
+    background-color: var(--first-color);
+    color: white;
+}
+
 .primary-box {
     padding: .5rem 1rem;
     font-weight: bold;
@@ -168,4 +186,19 @@ main .welcome-subtitle {
     border: 3px solid var(--first-color);
     border-radius: 5px;
     margin: .5rem 0;
+}
+.success-message {
+    padding: .5rem;
+    background-color: var(--success-background-color);
+    color: var(--success-color);
+    font-weight: bold;
+    border: 3px solid var(--success-color);
+    border-radius: 5px;
+    margin: .5rem 0;
+}
+
+.primary-spliter {
+    height: 5px;
+    border-radius: 10px;
+    background-color: var(--first-color);
 }

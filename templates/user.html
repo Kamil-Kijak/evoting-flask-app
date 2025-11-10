@@ -16,3 +16,70 @@
 {% block header %}
     {% include "components/navbar.html" %}
 {% endblock %}
+
+{% block main %}
+    {% if not found %}
+    <section>
+        <h1 aria-label="error heading">User Not found</h1>
+        <div class="primary-spliter" aria-label="spliter"></div>
+    </section>
+    <section class="flex-center" style="flex-direction: column;">
+        <p aria-label="error text" style="margin: 2rem 0;font-size: larger;text-align: center;">User with this ID is not existing<br> Check correctness of user ID</p>
+        <a href="{{ url_for('main_page')}}">
+            <button class="primary-button" aria-label="back button">
+                <span style="font-size: 1.8rem;" aria-hidden="true">
+                    Back
+                </span>
+            </button>
+        </a>
+    </section>
+    {% else %}
+    {% if success %}
+        <section style="margin-top: 1rem;">
+            <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+        </section>
+    {% endif %}
+    <section style="margin: 3rem 0;">
+        <h1 aria-label="error heading" style="font-size: 2.5rem;">Profile description</h1>
+        <div class="primary-spliter" aria-label="spliter"></div>
+    </section>
+    <section class="flex-center" style="flex-direction: column;">
+        <section class="flex-center">
+            <i class="fa-solid fa-user-tie" style="transform: scale(5);width: 100%;height: 100%;margin: 1.5rem 6rem 0 0;"></i>
+            <section class="flex-center" style="flex-direction: column;">
+                <h1 style="font-size: 3rem;margin: 2rem 0;">{{ user.name + " " + user.surname }}</h1>
+                <h2 style="font-size: 2rem;">{{ user.email }}</h2>
+            </section>
+        </section>
+        {% if permission %}
+        <section style="margin: 3rem 0;">
+            <h1 aria-label="error heading">Profile options</h1>
+            <div class="primary-spliter" aria-label="spliter"></div>
+        </section>
+        <section class="flex-center" style="width: 100%;flex-direction: column;row-gap: 1rem;justify-content: start;">
+            <a href="{{ url_for('changing_password') }}">
+                <button class="secondary-button" aria-label="changing email button">
+                    <span aria-hidden="true" style="font-size: 2rem;">
+                        <i class="fa-solid fa-envelope"></i> Change email adress
+                    </span>
+                </button>
+            </a>
+            <a href="{{ url_for('changing_password') }}">
+                <button class="secondary-button">
+                    <span aria-hidden="true" style="font-size: 2rem;">
+                        <i class="fa-solid fa-key"></i> Change password
+                    </span>
+                </button>
+            </a>
+            <a href="{{ url_for('changing_password') }}">
+                <button class="secondary-button">
+                    <span aria-hidden="true" style="font-size: 2rem;">
+                        <i class="fa-solid fa-user"></i> Change name, surname
+                    </span>
+                </button>
+            </a>
+        </section>
+        {% endif %}
+    </section>
+    {% endif %}
+{% endblock %}
