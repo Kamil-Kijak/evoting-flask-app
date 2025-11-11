@@ -14,12 +14,12 @@ from database.models import db
 def main_page():
     if not session.get("idUser"):
         return redirect(url_for("welcome_page"))
-    return render_template("main.html")
+    return render_template("pages/main.html")
 
 
 @app.route("/welcome")
 def welcome_page():
-    return render_template("landingPage.html")
+    return render_template("pages/landingPage.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
@@ -82,7 +82,7 @@ def changing_password():
             db.session.query(User).filter(User.id == id).update({User.password: hash.decode()})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
+            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
         else:
             return render_template("forms/changePassword.html", values={})
     else:
@@ -103,7 +103,7 @@ def changing_email():
             db.session.query(User).filter(User.id == id).update({User.email: data.get("email")})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
+            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeEmail.html", values={"email":user.email})
@@ -123,7 +123,7 @@ def changing_data():
             db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname")})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
+            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeData.html", values={"name":user.name, "surname":user.surname})
@@ -135,9 +135,9 @@ def user_data(id):
     if session.get("idUser"):
         user = db.session.query(User).filter(User.id == id).first()
         if user:
-            return render_template("user.html", found=True, permission=user.id == id, user=user)
+            return render_template("pages/user.html", found=True, permission=user.id == id, user=user)
         else:
-            return render_template("user.html", found=False)
+            return render_template("pages/user.html", found=False)
     else:
         return redirect(url_for("main_page"))
 
