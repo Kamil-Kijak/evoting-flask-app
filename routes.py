@@ -24,27 +24,27 @@ def welcome_page():
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
     if request.method == "POST":
+        data = request.form.to_dict()
         try:
-            data = request.form.to_dict()
             userSchema.load(data)
-            # success
-            if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
-                return render_template("forms/register.html", errors={"email":["This email is already taken"]}, values=data)
-            passwordBytes = str(data.get("password")).encode("utf-8")
-            salt = bcrypt.gensalt()
-            hash = bcrypt.hashpw(passwordBytes, salt)
-            newUser = User(
-                name=data.get("name").capitalize(),
-                surname=data.get("surname").capitalize(),
-                email=data.get("email"),
-                password=hash.decode()
-            )
-            db.session.add(newUser)
-            db.session.commit()
-            session["idUser"] = newUser.id
-            return redirect(url_for("main_page"))
         except ValidationError as err:
             return render_template("forms/register.html", errors=err.messages, values=data)
+        # success
+        if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
+            return render_template("forms/register.html", errors={"email":["This email is already taken"]}, values=data)
+        passwordBytes = str(data.get("password")).encode("utf-8")
+        salt = bcrypt.gensalt()
+        hash = bcrypt.hashpw(passwordBytes, salt)
+        newUser = User(
+            name=data.get("name").capitalize(),
+            surname=data.get("surname").capitalize(),
+            email=data.get("email"),
+            password=hash.decode()
+        )
+        db.session.add(newUser)
+        db.session.commit()
+        session["idUser"] = newUser.id
+        return redirect(url_for("main_page"))
 
     else:
         return render_template("forms/register.html", values={})
@@ -73,16 +73,16 @@ def changing_password():
             data = request.form.to_dict()
             try:
                 changingPasswordSchema.load(data)
-                # valid data
-                passwordBytes = str(data.get("password")).encode("utf-8")
-                salt = bcrypt.gensalt()
-                hash = bcrypt.hashpw(passwordBytes, salt)
-                db.session.query(User).filter(User.id == id).update({User.password: hash.decode()})
-                db.session.commit()
-                user = db.session.query(User).filter(User.id == id).first()
-                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
             except ValidationError as err:
                 return render_template("forms/changePassword.html", errors=err.messages, values=data)
+            # valid data
+            passwordBytes = str(data.get("password")).encode("utf-8")
+            salt = bcrypt.gensalt()
+            hash = bcrypt.hashpw(passwordBytes, salt)
+            db.session.query(User).filter(User.id == id).update({User.password: hash.decode()})
+            db.session.commit()
+            user = db.session.query(User).filter(User.id == id).first()
+            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
         else:
             return render_template("forms/changePassword.html", values={})
     else:
@@ -96,14 +96,14 @@ def changing_email():
             data = request.form.to_dict()
             try:
                 changingEmailSchema.load(data)
-                if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
-                    return render_template("forms/changeEmail.html", errors={"email":["This email is already taken"]}, values=data)
-                db.session.query(User).filter(User.id == id).update({User.email: data.get("email")})
-                db.session.commit()
-                user = db.session.query(User).filter(User.id == id).first()
-                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
             except ValidationError as err:
                 return render_template("forms/changeEmail.html", errors=err.messages, values=data)
+            if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
+                return render_template("forms/changeEmail.html", errors={"email":["This email is already taken"]}, values=data)
+            db.session.query(User).filter(User.id == id).update({User.email: data.get("email")})
+            db.session.commit()
+            user = db.session.query(User).filter(User.id == id).first()
+            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeEmail.html", values={"email":user.email})
@@ -118,12 +118,12 @@ def changing_data():
             data = request.form.to_dict()
             try:
                 changingUserDataSchema.load(data)
-                db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname")})
-                db.session.commit()
-                user = db.session.query(User).filter(User.id == id).first()
-                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
             except ValidationError as err:
                 return render_template("forms/changeData.html", errors=err.messages, values=data)
+            db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname")})
+            db.session.commit()
+            user = db.session.query(User).filter(User.id == id).first()
+            return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeData.html", values={"name":user.name, "surname":user.surname})
