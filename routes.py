@@ -2,7 +2,7 @@
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
-from validation import userSchema, changingPasswordSchema, changingEmailSchema
+from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema
 from marshmallow import ValidationError
 from database.models import User
 from database.models import db
@@ -107,6 +107,26 @@ def changing_email():
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeEmail.html", values={"email":user.email})
+    else:
+        return redirect(url_for("main_page"))
+    
+@app.route("/changing_data", methods=["GET", "POST"])
+def changing_data():
+    id = session.get("idUser")
+    if id:
+        if request.method == "POST":
+            data = request.form.to_dict()
+            try:
+                changingUserDataSchema.load(data)
+                db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname")})
+                db.session.commit()
+                user = db.session.query(User).filter(User.id == id).first()
+                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
+            except ValidationError as err:
+                return render_template("forms/changeData.html", errors=err.messages, values=data)
+        else:
+            user = db.session.query(User).filter(User.id == id).first()
+            return render_template("forms/changeData.html", values={"name":user.name, "surname":user.surname})
     else:
         return redirect(url_for("main_page"))
     

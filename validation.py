@@ -30,4 +30,10 @@ changingPasswordSchema = ChangingPasswordSchema()
 class ChangingEmailSchema(Schema):
     email = fields.Email(required=True, error_messages={"required":"Email is required", "invalid":"Email is invalid"})
 
-changingEmailSchema = ChangingEmailSchema()       
+changingEmailSchema = ChangingEmailSchema()
+
+class ChangingUserDataSchema(Schema):
+    name = fields.String(required=True, validate=validate.Length(min=1, max=50, error="Name length between 1 and 50"), error_messages={"required":"Name is required"})
+    surname = fields.String(required=True, validate=validate.Length(min=1, max=50, error="Surname length between 1 and 50"), error_messages={"required":"Surname is required"})
+
+changingUserDataSchema = ChangingUserDataSchema()

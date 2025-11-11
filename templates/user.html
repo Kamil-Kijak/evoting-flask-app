@@ -43,9 +43,9 @@
         <h1 aria-label="error heading" style="font-size: 2.5rem;">Profile description</h1>
         <div class="primary-spliter" aria-label="spliter"></div>
     </section>
-    <section class="flex-center" style="flex-direction: column;">
-        <section class="flex-center">
-            <i class="fa-solid fa-user-tie" style="transform: scale(5);width: 100%;height: 100%;margin: 1.5rem 6rem 0 0;"></i>
+    <section class="flex-center" style="flex-direction: column;width: 100%;">
+        <section class="flex-center" style="width: 100%;">
+            <i class="fa-solid fa-user-tie" style="transform: scale(5);height: 100%;margin: 1.5rem 6rem 0 0;"></i>
             <section class="flex-center" style="flex-direction: column;">
                 <h1 style="font-size: 3rem;margin: 2rem 0;">{{ user.name + " " + user.surname }}</h1>
                 <h2 style="font-size: 2rem;">{{ user.email }}</h2>
@@ -56,7 +56,7 @@
             <h1 aria-label="error heading">Profile options</h1>
             <div class="primary-spliter" aria-label="spliter"></div>
         </section>
-        <section class="flex-center" style="width: 100%;flex-direction: column;row-gap: 1rem;justify-content: start;">
+        <section class="flex-center" style="flex-direction: column;row-gap: 1rem;justify-content: start;align-items: start;margin-bottom: 2rem;">
             <a href="{{ url_for('changing_email') }}">
                 <button class="secondary-button" aria-label="changing email button">
                     <span aria-hidden="true" style="font-size: 2rem;">
@@ -71,7 +71,7 @@
                     </span>
                 </button>
             </a>
-            <a href="{{ url_for('changing_password') }}">
+            <a href="{{ url_for('changing_data') }}">
                 <button class="secondary-button">
                     <span aria-hidden="true" style="font-size: 2rem;">
                         <i class="fa-solid fa-user"></i> Change name, surname
