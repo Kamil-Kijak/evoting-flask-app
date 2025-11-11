@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block main %}
+<section style="margin-bottom: 2rem;margin-top: 2rem;">
+    <h1 class="secondary-box">User register</h1>
+</section>
+<form class="card" method="post" style="width: 400px;">
+    <section class="input-group">
+        <p><i class="fa-solid fa-user"></i> name</p>
+        <input type="text" placeholder="e.g. Jan" name="name" aria-label="name-input" value="{{ values.name }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-user"></i> surname</p>
+        <input type="text" placeholder="e.g. Kowalski" name="surname" aria-label="surname-input" value="{{ values.surname }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-envelope"></i> email</p>
+        <input type="email" placeholder="e.g. name@domain.com" name="email" aria-label="email-input" value="{{ values.email }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> new password</p>
+        <input type="password" placeholder="new password" name="password" aria-label="password-input" value="{{ values.password }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> repeat password</p>
+        <input type="password" placeholder="repeat your password" name="confirmPassword" aria-label="confirm-password-input" value="{{ values.confirmPassword }}">
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" role="submit" aria-label="confirm">
+        <span style="font-size: 1.2rem;" aria-hidden="true">
+            Register
+        </span>
+    </button>
+    <section style="margin-top: 1rem;">
+        {% if errors %}
+            {% for value in errors.values() %}
+            <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
+            {% endfor %}
+        {% endif %}
+    </section>
+</form>
+<a style="font-size: 1.1rem;margin-top: 2rem;" href="{{ url_for('login_user')}}">
+    I have already an account
+</a>
+<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('main_page') }}">
+    <span style="font-size: 1.2rem;" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endblock %}
