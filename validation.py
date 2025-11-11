@@ -26,3 +26,8 @@ class ChangingPasswordSchema(Schema):
             raise ValidationError("Passwords must be the same", field_name="confirmPassword")
         
 changingPasswordSchema = ChangingPasswordSchema()
+
+class ChangingEmailSchema(Schema):
+    email = fields.Email(required=True, error_messages={"required":"Email is required", "invalid":"Email is invalid"})
+
+changingEmailSchema = ChangingEmailSchema()       

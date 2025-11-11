@@ -2,7 +2,7 @@
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
-from validation import userSchema, changingPasswordSchema
+from validation import userSchema, changingPasswordSchema, changingEmailSchema
 from marshmallow import ValidationError
 from database.models import User
 from database.models import db
@@ -93,7 +93,17 @@ def changing_email():
     id = session.get("idUser")
     if id:
         if request.method == "POST":
-            pass
+            data = request.form.to_dict()
+            try:
+                changingEmailSchema.load(data)
+                if(db.session.query(User).filter(User.email == data.get("email")).count() > 0):
+                    return render_template("forms/changeEmail.html", errors={"email":["This email is already taken"]}, values=data)
+                db.session.query(User).filter(User.id == id).update({User.email: data.get("email")})
+                db.session.commit()
+                user = db.session.query(User).filter(User.id == id).first()
+                return render_template("user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
+            except ValidationError as err:
+                return render_template("forms/changeEmail.html", errors=err.messages, values=data)
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeEmail.html", values={"email":user.email})
