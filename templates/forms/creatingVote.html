@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    New Vote
+{% endblock %}
+
+{% block main %}
+
+<section style="margin-bottom: 2rem;margin-top: 2rem;">
+    <h1 class="secondary-box">Create new Vote</h1>
+</section>
+
+<form class="card" method="post" style="width: 400px;">
+    <section class="input-group">
+        <p><i class="fa-solid fa-envelope"></i> vote title</p>
+        <input type="text" placeholder="enter vote title" name="voteTitle" aria-label="vote-title-input" value="{{ values.voteTitle }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> voting start date</p>
+        <input type="date" name="startDate" aria-label="start-date-input" value="{{ values.startDate }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> voting end date</p>
+        <input type="date" name="endDate" aria-label="end-date-input" value="{{ values.endDate }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> description</p>
+        <textarea name="description" aria-label="description-input" style="height: 100px;">{{ values.description }}</textarea>
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-key"></i> Real time results</p>
+        <input type="checkbox" name="realTimeResults" aria-label="realTimeResults-checkbox" value="{{ values.description }}">
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" role="submit" aria-label="confirm">
+        <span style="font-size: 1.2rem;" aria-hidden="true">
+            Create vote
+        </span>
+    </button>
+    <section style="margin-top: 1rem;">
+        {% if errors %}
+            {% for value in errors.values() %}
+            <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
+            {% endfor %}
+        {% endif %}
+    </section>
+</form>
+
+<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('votes_page') }}">
+    <span style="font-size: 1.2rem;" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endblock %}

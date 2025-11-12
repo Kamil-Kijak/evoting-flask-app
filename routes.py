@@ -23,6 +23,18 @@ def votes_page():
     return render_template("pages/votes.html")
 
 
+@app.route("/creating_vote", methods=["GET", "POST"])
+def creating_vote():
+    id = session.get("idUser")
+    if id:
+        if request.method == "POST":
+            pass
+        else:
+            return render_template("forms/creatingVote.html", values={})
+    else:
+        return redirect(url_for("welcome_page"))
+
+
 @app.route("/welcome")
 def welcome_page():
     return render_template("pages/landingPage.html")

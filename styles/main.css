@@ -38,6 +38,9 @@ body {
 a {
     color: inherit;
 }
+textarea {
+    resize: none;
+}
 
 header nav {
     display: flex;
@@ -122,7 +125,7 @@ main .welcome-subtitle {
 .input-group p {
     font-weight: bold;
 }
-.input-group input {
+.input-group input, textarea {
     height: 40px;
     font-size: 1rem;
     padding: .2rem .4rem;

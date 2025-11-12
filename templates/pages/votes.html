@@ -15,11 +15,13 @@
             <h1>Create your new vote</h1>
             <div class="primary-spliter" aria-label="spliter"></div>
         </section>
-        <button class="primary-button" style="margin-top: 1rem;">
-            <span style="font-size: 1.8rem;" aria-hidden="true">
-                <i class="fa-solid fa-plus"></i> Create vote
-            </span>
-        </button>
+        <a href="{{ url_for('creating_vote')}}">
+            <button class="primary-button" style="margin-top: 1rem;">
+                <span style="font-size: 1.8rem;" aria-hidden="true">
+                    <i class="fa-solid fa-plus"></i> Create vote
+                </span>
+            </button>
+        </a>
     </section>
     <section style="margin-top: 3rem;" class="flex-center">
         <section>
