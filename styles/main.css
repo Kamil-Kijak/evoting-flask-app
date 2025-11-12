@@ -130,6 +130,14 @@ main .welcome-subtitle {
     border-radius: 5px;
 }
 
+.primary-select {
+    height: 40px;
+    font-size: 1rem;
+    padding: .2rem .4rem;
+    border: 2px solid var(--second-color);
+    border-radius: 5px;
+}
+
 .primary-button {
     padding: .5rem 1rem;
     font-weight: bold;

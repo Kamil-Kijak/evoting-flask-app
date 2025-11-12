@@ -8,3 +8,36 @@
 {% block header %}
     {% include "components/navbar.html" %}
 {% endblock %}
+
+{% block main %}
+    <section class="flex-center" style="flex-direction: column;">
+        <section>
+            <h1>Create your new vote</h1>
+            <div class="primary-spliter" aria-label="spliter"></div>
+        </section>
+        <button class="primary-button" style="margin-top: 1rem;">
+            <span style="font-size: 1.8rem;" aria-hidden="true">
+                <i class="fa-solid fa-plus"></i> Create vote
+            </span>
+        </button>
+    </section>
+    <section style="margin-top: 3rem;" class="flex-center">
+        <section>
+            <h1>My votes</h1>
+            <div class="primary-spliter" aria-label="spliter"></div>
+        </section>
+        <section>
+            <select name="" class="primary-select" style="margin-left: 3rem;">
+                <option value="" style="display: none;" selected>Sort by</option>
+            </select>
+        </section>
+    </section>
+    <section style="margin-top: 3rem;">
+        {% if votes %}
+
+        {% else %}
+            <h1>You have nothing there!</h1>
+        {% endif %}
+    </section>
+
+{% endblock %}
