@@ -21,6 +21,7 @@ class User(db.Model):
     surname = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+    votes = db.relationship('Vote', backref='user', lazy=True)
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -34,6 +35,7 @@ class Vote(db.Model):
     description = db.Column(db.Text, nullable=False)
     realTimeResults = db.Column(db.Boolean, default=True, nullable=False)
     options = db.relationship('VoteOption', backref='vote', lazy=True)
+    idUser = db.Column(db.String(21), db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"<Vote {self.title}>"
