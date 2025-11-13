@@ -37,3 +37,8 @@ class ChangingUserDataSchema(Schema):
     surname = fields.String(required=True, validate=validate.Length(min=1, max=50, error="Surname length between 1 and 50"), error_messages={"required":"Surname is required"})
 
 changingUserDataSchema = ChangingUserDataSchema()
+
+class VoteSchema(Schema):
+    voteTitle = fields.String(required=True, validate=validate.Length(min=1, max=50, error="vote title length between 1 and 50"), error_messages={"required":"vote title is required"})
+
+voteSchema = VoteSchema()

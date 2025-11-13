@@ -13,26 +13,44 @@
 
 <form class="card" method="post" style="width: 400px;">
     <section class="input-group">
-        <p><i class="fa-solid fa-envelope"></i> vote title</p>
+        <p><i class="fa-solid fa-check-to-slot"></i> vote title</p>
         <input type="text" placeholder="enter vote title" name="voteTitle" aria-label="vote-title-input" value="{{ values.voteTitle }}">
     </section>
     <section class="input-group">
-        <p><i class="fa-solid fa-key"></i> voting start date</p>
+        <p><i class="fa-solid fa-calendar-days"></i> voting start date</p>
         <input type="date" name="startDate" aria-label="start-date-input" value="{{ values.startDate }}">
     </section>
     <section class="input-group">
-        <p><i class="fa-solid fa-key"></i> voting end date</p>
+        <p><i class="fa-solid fa-calendar-days"></i> voting end date</p>
         <input type="date" name="endDate" aria-label="end-date-input" value="{{ values.endDate }}">
     </section>
     <section class="input-group">
-        <p><i class="fa-solid fa-key"></i> description</p>
-        <textarea name="description" aria-label="description-input" style="height: 100px;">{{ values.description }}</textarea>
+        <p><i class="fa-solid fa-file"></i> description</p>
+        <textarea name="description" aria-label="description-input" placeholder="enter vote description" style="height: 100px;">{{ values.description }}</textarea>
     </section>
-    <section class="input-group">
-        <p><i class="fa-solid fa-key"></i> Real time results</p>
-        <input type="checkbox" name="realTimeResults" aria-label="realTimeResults-checkbox" value="{{ values.description }}">
+    <section class="checkbox-group">
+        <p><i class="fa-solid fa-square-poll-horizontal"></i> Real time results</p>
+        <input type="checkbox" name="realTimeResults" aria-label="realTimeResults-checkbox" value="{{ values.realTimeResults }}">
     </section>
-    <button class="primary-button" style="margin-top: 1rem;" role="submit" aria-label="confirm">
+    <section style="margin: 1rem 0;">
+        <p style="font-weight: bold;"><i class="fa-solid fa-file"></i> Voting options </p>
+        <section class="flex-center" style="align-items: start;margin-top: 1rem;flex-direction: column;" id="vote-options-container">
+            {% for i in range(voteOptionsCount) %}
+                <section class="input-group">
+                    <p>Option {{ i + 1 }}</p>
+                    <input type="text" name="voteOptions[]" aria-label="option{{ i + 1}}-input" placeholder="Enter vote option" value="{{ values.voteOptions[i] if values.voteOptions }}">
+                </section>
+            {% endfor %}
+        </section>
+        <section class="flex-center" style="margin-top: 1rem;">
+            <a href="{{url_for('creating_vote', voteOptionsCount=voteOptionsCount + 1)}}">
+                <button class="primary-button" type="button">
+                    Add new vote option
+                </button>
+            </a>
+        </section>
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
         <span style="font-size: 1.2rem;" aria-hidden="true">
             Create vote
         </span>
@@ -45,6 +63,7 @@
         {% endif %}
     </section>
 </form>
+
 
 <a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('votes_page') }}">
     <span style="font-size: 1.2rem;" aria-hidden="true">
