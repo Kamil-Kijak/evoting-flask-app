@@ -27,11 +27,14 @@ def votes_page():
 def creating_vote():
     id = session.get("idUser")
     if id:
-        if request.method == "POST":
-            pass
+        count = request.args.get("count")
+        if count:
+            if request.method == "POST":
+                pass
+            else:
+                return render_template("forms/creatingVote.html", values={"count":int(count)})
         else:
-            voteOptionsCount = request.args.get("voteOptionsCount", default=1, type=int)
-            return render_template("forms/creatingVote.html", values={}, voteOptionsCount=voteOptionsCount)
+            return render_template("forms/creatingVote.html", values={})
     else:
         return redirect(url_for("welcome_page"))
 

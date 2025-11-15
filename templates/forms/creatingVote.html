@@ -7,6 +7,7 @@
 
 {% block main %}
 
+{% if values.count %}
 <section style="margin-bottom: 2rem;margin-top: 2rem;">
     <h1 class="secondary-box">Create new Vote</h1>
 </section>
@@ -35,19 +36,12 @@
     <section style="margin: 1rem 0;">
         <p style="font-weight: bold;"><i class="fa-solid fa-file"></i> Voting options </p>
         <section class="flex-center" style="align-items: start;margin-top: 1rem;flex-direction: column;" id="vote-options-container">
-            {% for i in range(voteOptionsCount) %}
+            {% for i in range(values.count) %}
                 <section class="input-group">
                     <p>Option {{ i + 1 }}</p>
                     <input type="text" name="voteOptions[]" aria-label="option{{ i + 1}}-input" placeholder="Enter vote option" value="{{ values.voteOptions[i] if values.voteOptions }}">
                 </section>
             {% endfor %}
-        </section>
-        <section class="flex-center" style="margin-top: 1rem;">
-            <a href="{{url_for('creating_vote', voteOptionsCount=voteOptionsCount + 1)}}">
-                <button class="primary-button" type="button">
-                    Add new vote option
-                </button>
-            </a>
         </section>
     </section>
     <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
@@ -65,10 +59,37 @@
 </form>
 
 
-<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('votes_page') }}">
+<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('creating_vote') }}">
     <span style="font-size: 1.2rem;" aria-hidden="true">
         Back
     </span>
 </a>
+
+{% else %}
+
+<section style="margin-bottom: 2rem;margin-top: 2rem;">
+    <h1 class="secondary-box">Count of voting options</h1>
+</section>
+
+<form class="card" method="get" style="width: 400px;">
+    <section class="input-group">
+        <p><i class="fa-solid fa-check-to-slot"></i> Count of vote options</p>
+        <input type="number" placeholder="enter vote options count" name="count" aria-label="vote-count-option-input" value="{{ values.count }}" min="1">
+    </section>
+    <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
+        <span style="font-size: 1.2rem;" aria-hidden="true">
+            Next
+        </span>
+    </button>
+</form>
+
+<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('main_page') }}">
+    <span style="font-size: 1.2rem;" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endif %}
+
 
 {% endblock %}
