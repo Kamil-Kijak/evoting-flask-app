@@ -1,5 +1,6 @@
 
-from marshmallow import Schema, fields, validate, ValidationError, validates_schema
+import datetime
+from marshmallow import Schema, fields, validate, ValidationError, validates_schema, validates
 
 
 class UserSchema(Schema):
@@ -40,5 +41,30 @@ changingUserDataSchema = ChangingUserDataSchema()
 
 class VoteSchema(Schema):
     voteTitle = fields.String(required=True, validate=validate.Length(min=1, max=50, error="vote title length between 1 and 50"), error_messages={"required":"vote title is required"})
+    startDate = fields.Date(required=True, error_messages={"required":"start date is required"})
+    endDate = fields.Date(required=True, error_messages={"required":"end date is required"})
+    description = fields.String(required=True, validate=validate.Length(min=1, max=65535, error="description length between 1 and 65535"), error_messages={"required":"description is required"})
+    realTimeResults = fields.Boolean(required=True, error_messages={"required":"real time results is required"})
+    voteOptions = fields.List(
+        fields.String(validate=validate.Length(min=0, max=100, error="description length between 1 and 65535")),
+        required=True,
+        error_messages={"required":"vote options is required"}
+    )
+
+    @validates("voteOptions")
+    def validate_vote_options(self, value):
+        for idx, element in enumerate(value):
+            if len(element) > 100 or len(element) < 1:
+                raise ValidationError("All vote option must be between 1 and 100")
+
+    @validates("startDate")
+    def validate_date(self, value):
+        if value <= datetime.date.today():
+            raise ValidationError("start date can't be in past")
+        
+    @validates("endDate")
+    def validate_date(self, value):
+        if value <= datetime.date.today():
+            raise ValidationError("end date can't be in past")
 
 voteSchema = VoteSchema()
