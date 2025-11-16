@@ -9,12 +9,15 @@
 
 :root {
     --first-color:#cc0000;
+    --hover-first-color:#e31010;
     --second-color:#2A2929;
     --hover-second-color:#3C3C3C;
     --error-background-color:#f19595;
 
     --success-color:#33A008;
     --success-background-color:#98d580;
+    --warning-color:#b79f00;
+    --warning-background-color:#e9df6b;
 }
 
 .flex {
@@ -191,6 +194,21 @@ main .welcome-subtitle {
     color: white;
 }
 
+.danger-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--first-color);
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+.danger-button:hover {
+    background-color: var(--hover-first-color);
+}
+
 .primary-box {
     padding: .5rem 1rem;
     font-weight: bold;
@@ -228,8 +246,24 @@ main .welcome-subtitle {
     margin: .5rem 0;
 }
 
+.warning-message {
+    padding: .5rem;
+    background-color: var(--warning-background-color);
+    color: var(--warning-color);
+    font-weight: bold;
+    border: 3px solid var(--warning-color);
+    border-radius: 5px;
+    margin: .5rem 0;
+}
+
 .primary-spliter {
     height: 5px;
     border-radius: 10px;
     background-color: var(--first-color);
+}
+
+.vote-container {
+    border: 3px solid var(--second-color);
+    border-radius: 5px;
+    padding: 1rem;
 }

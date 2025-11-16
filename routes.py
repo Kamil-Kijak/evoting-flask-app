@@ -18,9 +18,13 @@ def main_page():
 
 @app.route("/votes")
 def votes_page():
-    if not session.get("idUser"):
+    id = session.get("idUser")
+    if id:
+        user = db.session.query(User).filter(User.id == id).first()
+        votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
+        return render_template("pages/votes.html", votes=votes)
+    else:
         return redirect(url_for("welcome_page"))
-    return render_template("pages/votes.html")
 
 
 @app.route("/creating_vote", methods=["GET", "POST"])

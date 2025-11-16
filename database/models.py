@@ -1,6 +1,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from nanoid import generate
 
 # creating database first
@@ -25,6 +25,15 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}>"
+    
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "surname":self.surname,
+            "email":self.email,
+            "votes":[vote.to_dict() for vote in self.votes],
+        }
 
 class Vote(db.Model):
     __tablename__ = 'vote'
@@ -40,15 +49,35 @@ class Vote(db.Model):
     def __repr__(self):
         return f"<Vote {self.title}>"
     
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "title":self.title,
+            "startDate":self.startDate.strftime("%d.%m.%Y"),
+            "endDate":self.endDate.strftime("%d.%m.%Y"),
+            "description":self.description,
+            "realTimeResults":self.realTimeResults,
+            "options":[option.to_dict() for option in self.options],
+            "idUser":self.idUser,
+            "status":"Waiting" if self.startDate < datetime.today() else "Ended" if self.endDate > datetime.today() else "In progress"
+        }
+    
 class VoteOption(db.Model):
     __tablename__ = 'voteOption'
     id = db.Column(db.String(21), primary_key=True, default=generateNanoId)
     idVote = db.Column(db.String(21), db.ForeignKey('vote.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    voting = db.relationship('Voting', backref='voteOption', lazy=True)
+    votings = db.relationship('Voting', backref='voteOption', lazy=True)
 
     def __repr__(self):
         return f"<VoteOption {self.name}>"
+    
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "votingCount":len(self.votings)
+        }
 
 class Voting(db.Model):
     __tablename__ = 'voting'

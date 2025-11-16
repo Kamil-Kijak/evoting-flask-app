@@ -65,7 +65,7 @@ class VoteSchema(Schema):
         
     @validates("endDate")
     def validate_end_date(self, value, **kwargs):
-        if value <= datetime.date.today():
+        if value < datetime.date.today():
             raise ValidationError("end date can't be in past")
         
     @validates_schema
