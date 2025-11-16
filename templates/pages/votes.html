@@ -11,6 +11,11 @@
 
 {% block main %}
     <section class="flex-center" style="flex-direction: column;">
+        {% if success %}
+            <section style="margin-top: 1rem;">
+                <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+            </section>
+        {% endif %}
         <section>
             <h1>Create your new vote</h1>
             <div class="primary-spliter" aria-label="spliter"></div>

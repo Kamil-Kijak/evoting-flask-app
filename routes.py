@@ -2,9 +2,9 @@
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
-from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema
+from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema, voteSchema
 from marshmallow import ValidationError
-from database.models import User
+from database.models import User, Vote, VoteOption
 from database.models import db
 
 
@@ -30,7 +30,31 @@ def creating_vote():
         count = request.args.get("count")
         if count:
             if request.method == "POST":
-                pass
+                # creating vote
+                data = request.form.to_dict()
+                voteOptions = request.form.getlist("voteOptions")
+                data["voteOptions"] = voteOptions
+                data["realTimeResults"] = "realTimeResults" in data
+                try:
+                    voteSchema.load(data)
+                except ValidationError as err:
+                    data["count"] = int(count)
+                    return render_template("forms/creatingVote.html", errors=err.messages, values=data)
+                vote = Vote(
+                    title=data.get("voteTitle"),
+                    startDate=data.get("startDate"),
+                    endDate=data.get("endDate"),
+                    description=data.get("description"),
+                    realTimeResults=data.get("realTimeResults"),
+                    idUser=id
+                )
+                voteOptions=[
+                    VoteOption(idVote=vote.id, name=name) for name in voteOptions
+                ]
+                vote.options = voteOptions
+                db.session.add(vote)
+                db.session.commit()
+                return render_template("pages/votes.html", success="Created new Vote")
             else:
                 return render_template("forms/creatingVote.html", values={"count":int(count)})
         else:

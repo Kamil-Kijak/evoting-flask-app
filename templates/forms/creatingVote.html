@@ -39,7 +39,7 @@
             {% for i in range(values.count) %}
                 <section class="input-group">
                     <p>Option {{ i + 1 }}</p>
-                    <input type="text" name="voteOptions[]" aria-label="option{{ i + 1}}-input" placeholder="Enter vote option" value="{{ values.voteOptions[i] if values.voteOptions }}">
+                    <input type="text" name="voteOptions" aria-label="option{{ i + 1}}-input" placeholder="Enter vote option" value="{{ values.voteOptions[i] if values.voteOptions }}">
                 </section>
             {% endfor %}
         </section>
