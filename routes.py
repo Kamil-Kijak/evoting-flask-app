@@ -25,6 +25,28 @@ def votes_page():
         return render_template("pages/votes.html", votes=votes)
     else:
         return redirect(url_for("welcome_page"))
+    
+
+@app.route("/deleting_vote", methods=["GET", "POST"])
+def deleting_vote():
+    id = session.get("idUser")
+    if id:
+        idVote = request.args.get("idVote")
+        ownership = db.session.query(Vote).filter(Vote.id == idVote).filter(Vote.idUser == id).count()
+        if request.method == "POST":
+            if ownership == 1:
+                vote = db.session.query(Vote).filter(Vote.id == idVote).first()
+                db.session.delete(vote)
+                db.session.commit()
+                user = db.session.query(User).filter(User.id == id).first()
+                votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
+                return render_template("pages/votes.html", success="Vote deleted successfully", votes=votes)
+            else:
+                return redirect(url_for("votes_page"))
+        else:
+            return render_template("confirms/delete.html", forbidden=ownership == 0)
+    else:
+        return redirect(url_for("welcome_page"))
 
 
 @app.route("/creating_vote", methods=["GET", "POST"])
@@ -58,7 +80,9 @@ def creating_vote():
                 vote.options = voteOptions
                 db.session.add(vote)
                 db.session.commit()
-                return render_template("pages/votes.html", success="Created new Vote")
+                user = db.session.query(User).filter(User.id == id).first()
+                votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
+                return render_template("pages/votes.html", success="Created new Vote", votes=votes)
             else:
                 return render_template("forms/creatingVote.html", values={"count":int(count)})
         else:

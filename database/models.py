@@ -21,7 +21,7 @@ class User(db.Model):
     surname = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    votes = db.relationship('Vote', backref='user', lazy=True)
+    votes = db.relationship('Vote', backref='user', lazy=True, passive_deletes=True)
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -43,8 +43,8 @@ class Vote(db.Model):
     endDate = db.Column(db.DateTime, nullable=True)
     description = db.Column(db.Text, nullable=False)
     realTimeResults = db.Column(db.Boolean, default=True, nullable=False)
-    options = db.relationship('VoteOption', backref='vote', lazy=True)
-    idUser = db.Column(db.String(21), db.ForeignKey('user.id'), nullable=False)
+    options = db.relationship('VoteOption', backref='vote', lazy=True, passive_deletes=True)
+    idUser = db.Column(db.String(21), db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         return f"<Vote {self.title}>"
@@ -59,15 +59,15 @@ class Vote(db.Model):
             "realTimeResults":self.realTimeResults,
             "options":[option.to_dict() for option in self.options],
             "idUser":self.idUser,
-            "status":"Waiting" if self.startDate < datetime.today() else "Ended" if self.endDate > datetime.today() else "In progress"
+            "status":"Waiting" if self.startDate > datetime.today() else "Ended" if self.endDate < datetime.today() else "In progress"
         }
     
 class VoteOption(db.Model):
     __tablename__ = 'voteOption'
     id = db.Column(db.String(21), primary_key=True, default=generateNanoId)
-    idVote = db.Column(db.String(21), db.ForeignKey('vote.id'), nullable=False)
+    idVote = db.Column(db.String(21), db.ForeignKey('vote.id', ondelete="CASCADE"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    votings = db.relationship('Voting', backref='voteOption', lazy=True)
+    votings = db.relationship('Voting', backref='voteOption', lazy=True, passive_deletes=True)
 
     def __repr__(self):
         return f"<VoteOption {self.name}>"
@@ -82,8 +82,8 @@ class VoteOption(db.Model):
 class Voting(db.Model):
     __tablename__ = 'voting'
     id = db.Column(db.String(21), primary_key=True, default=generateNanoId)
-    idUser = db.Column(db.String(21), db.ForeignKey('user.id'), nullable=False)
-    idVoteOption = db.Column(db.String(21), db.ForeignKey('voteOption.id'), nullable=False)
+    idUser = db.Column(db.String(21), db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    idVoteOption = db.Column(db.String(21), db.ForeignKey('voteOption.id', ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         return f"<Voting {self.id}>"

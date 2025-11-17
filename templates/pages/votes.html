@@ -33,7 +33,7 @@
             <h1>My votes</h1>
             <div class="primary-spliter" aria-label="spliter"></div>
         </section>
-        <form method="get" style="display: flex;justify-content: space-between;width: 400px;">
+        <form method="get" action="{{ url_for('votes_page')}}" style="display: flex;justify-content: space-between;width: 400px;">
             <button class="primary-button">
                 <span style="font-size: 1.5rem;" aria-hidden="true">
                     <i class="fa-solid fa-magnifying-glass"></i> Search
@@ -50,7 +50,7 @@
     <section style="margin-top: 3rem;margin-bottom: 3rem;">
         {% if votes %}
             {% for element in votes %}
-                <section style="display: flex;flex-direction: column;max-width: 400px;" class="vote-container">
+                <section style="display: flex;flex-direction: column;max-width: 400px;margin-top: 3rem;" class="vote-container">
                     <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
                         <h3>{{ element.status }}</h3>
                     </section>
@@ -79,9 +79,9 @@
                             <button class="primary-button">
                                 Preview
                             </button>
-                            <button class="danger-button">
+                            <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
                                 Delete
-                            </button>
+                            </a>
                         </section>
                     </section>
                 </section>
