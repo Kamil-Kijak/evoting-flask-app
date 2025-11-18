@@ -20,9 +20,14 @@ def main_page():
 def votes_page():
     id = session.get("idUser")
     if id:
-        user = db.session.query(User).filter(User.id == id).first()
-        votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
-        return render_template("pages/votes.html", votes=votes)
+        statusFilter = request.args.get("status")
+        titleFilter = request.args.get("titleFilter", '')
+        success = request.args.get("successMessage")
+        votes = db.session.query(Vote).filter(Vote.idUser == id).filter(Vote.title.like(f"%{titleFilter}%")).all()
+        votes = [vote.to_dict() for vote in votes] if len(votes) > 0 else None
+        if statusFilter:
+            votes = [vote for vote in votes if vote["status"] == statusFilter]
+        return render_template("pages/votes.html", votes=votes, success=success)
     else:
         return redirect(url_for("welcome_page"))
     
@@ -38,9 +43,7 @@ def deleting_vote():
                 vote = db.session.query(Vote).filter(Vote.id == idVote).first()
                 db.session.delete(vote)
                 db.session.commit()
-                user = db.session.query(User).filter(User.id == id).first()
-                votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
-                return render_template("pages/votes.html", success="Vote deleted successfully", votes=votes)
+                return redirect(url_for("votes_page", successMessage="Vote deleted successfully"))
             else:
                 return redirect(url_for("votes_page"))
         else:
@@ -80,9 +83,7 @@ def creating_vote():
                 vote.options = voteOptions
                 db.session.add(vote)
                 db.session.commit()
-                user = db.session.query(User).filter(User.id == id).first()
-                votes = [vote.to_dict() for vote in user.votes] if len(user.votes) > 0 else None
-                return render_template("pages/votes.html", success="Created new Vote", votes=votes)
+                return redirect(url_for("votes_page", successMessage="Created new Vote"))
             else:
                 return render_template("forms/creatingVote.html", values={"count":int(count)})
         else:

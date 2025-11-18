@@ -10,85 +10,94 @@
 {% endblock %}
 
 {% block main %}
-    <section class="flex-center" style="flex-direction: column;margin-top: 3rem;">
-        {% if success %}
-            <section style="margin-top: 1rem;">
-                <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+    <section class="flex-center" style="flex-direction: column;justify-content: start;height: 100vh;">
+        <section class="flex-center" style="flex-direction: column;margin-top: 3rem;">
+            {% if success %}
+                <section style="margin-top: 1rem;">
+                    <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+                </section>
+            {% endif %}
+            <section>
+                <h1>Create your new vote</h1>
+                <div class="primary-spliter" aria-label="spliter"></div>
             </section>
-        {% endif %}
-        <section>
-            <h1>Create your new vote</h1>
-            <div class="primary-spliter" aria-label="spliter"></div>
+            <a href="{{ url_for('creating_vote')}}">
+                <button class="primary-button" style="margin-top: 1rem;">
+                    <span style="font-size: 1.8rem;" aria-hidden="true">
+                        <i class="fa-solid fa-plus"></i> Create vote
+                    </span>
+                </button>
+            </a>
         </section>
-        <a href="{{ url_for('creating_vote')}}">
-            <button class="primary-button" style="margin-top: 1rem;">
-                <span style="font-size: 1.8rem;" aria-hidden="true">
-                    <i class="fa-solid fa-plus"></i> Create vote
-                </span>
-            </button>
-        </a>
-    </section>
-    <section style="margin-top: 3rem;flex-direction: column;row-gap: 1rem;" class="flex-center">
-        <section>
-            <h1>My votes</h1>
-            <div class="primary-spliter" aria-label="spliter"></div>
+        <section style="margin-top: 3rem;flex-direction: column;row-gap: 1rem;" class="flex-center">
+            <section>
+                <h1>My votes</h1>
+                <div class="primary-spliter" aria-label="spliter"></div>
+            </section>
+            <form method="get" action="{{ url_for('votes_page')}}" style="display: flex;justify-content: space-between;width: 600px;column-gap: 1rem;">
+                <button class="primary-button">
+                    <span style="font-size: 1.5rem;" aria-hidden="true">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                    </span>
+                </button>
+                <section class="input-group">
+                    <input type="text" name="titleFilter" aria-label="title filter input" placeholder="Filter by title" value="{{ request.args.get('titleFilter', '') }}">
+                </section>
+                <select name="status" class="primary-select">
+                    <option value="" style="display: none;" >Status filter</option>
+                    <option value="" {{ 'selected' if request.args.get("status") == '' }}>None</option>
+                    <option value="In progress" {{ 'selected' if request.args.get("status") == 'In progress' }}>In progress</option>
+                    <option value="Waiting" {{ 'selected' if request.args.get("status") == 'Waiting' }}>Waiting</option>
+                    <option value="Ended" {{ 'selected' if request.args.get("status") == 'Ended' }}>Ended</option>
+                </select>
+            </form>
         </section>
-        <form method="get" action="{{ url_for('votes_page')}}" style="display: flex;justify-content: space-between;width: 400px;">
-            <button class="primary-button">
-                <span style="font-size: 1.5rem;" aria-hidden="true">
-                    <i class="fa-solid fa-magnifying-glass"></i> Search
-                </span>
-            </button>
-            <select name="sort" class="primary-select">
-                <option value="" style="display: none;" selected>Sort by</option>
-                <option value="title">Title</option>
-                <option value="startDate">Start date</option>
-                <option value="endDate">End date</option>
-            </select>
-        </form>
-    </section>
-    <section style="margin-top: 3rem;margin-bottom: 3rem;">
-        {% if votes %}
-            {% for element in votes %}
-                <section style="display: flex;flex-direction: column;max-width: 400px;margin-top: 3rem;" class="vote-container">
-                    <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
-                        <h3>{{ element.status }}</h3>
-                    </section>
-                    <section>
-                        <h2 style="text-align: center;">{{ element.title }}</h2>
-                        <div class="primary-spliter"></div>
-                    </section>
-                    <section class="flex-center" style="margin-top: 1rem;column-gap: .5rem;">
-                        <p>{{ element.startDate }} - {{ element.endDate }}</p>
-                    </section>
-                    <section style="margin-top: 1rem;column-gap: .5rem;">
-                        <h3 style="margin-bottom: .5rem;">Vote options</h3>
-                        {% for voteOption in element.options %}
-                            <ul style="margin-left: 1rem;">
-                                <li>{{ voteOption.name }}</li>
-                            </ul>
-                        {% endfor %}
-                    </section>
-                    <section style="margin-top: 1rem;column-gap: .5rem;">
-                        <h3 style="margin-bottom: .5rem;">Description</h3>
-                        <p>{{ element.description[:100] }}...</p>
-                    </section>
-                    <section style="margin-top: 1rem;column-gap: .5rem;">
-                        <h3 style="margin-bottom: .5rem;">Actions</h3>
-                        <section class="flex-center" style="justify-content: space-around;">
-                            <button class="primary-button">
-                                Preview
-                            </button>
-                            <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
-                                Delete
-                            </a>
+        <section style="margin-top: 3rem;margin-bottom: 3rem;">
+            {% if votes %}
+                {% for element in votes %}
+                    <section style="display: flex;flex-direction: column;max-width: 400px;margin-top: 3rem;" class="vote-container">
+                        <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
+                            <h3>{{ element.status }}</h3>
+                        </section>
+                        <section>
+                            <h2 style="text-align: center;">{{ element.title }}</h2>
+                            <div class="primary-spliter"></div>
+                        </section>
+                        <section class="flex-center" style="margin-top: 1rem;column-gap: .5rem;">
+                            <p>{{ element.startDate }} - {{ element.endDate }}</p>
+                        </section>
+                        <section style="margin-top: 1rem;column-gap: .5rem;">
+                            <h3 style="margin-bottom: .5rem;">Vote options</h3>
+                            {% for voteOption in element.options %}
+                                <ul style="margin-left: 1rem;">
+                                    <li><span style="font-weight: 700;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
+                                </ul>
+                            {% endfor %}
+                        </section>
+                        <section style="margin-top: 1rem;column-gap: .5rem;">
+                            <h3 style="margin-bottom: .5rem;">Description</h3>
+                            <p>{{ element.description[:100] }}...</p>
+                        </section>
+                        <section style="margin-top: 1rem;column-gap: .5rem;">
+                            <h3 style="margin-bottom: .5rem;">Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
+                        </section>
+                        <section style="margin-top: 1rem;column-gap: .5rem;">
+                            <h3 style="margin-bottom: .5rem;">Actions</h3>
+                            <section class="flex-center" style="justify-content: space-around;">
+                                <button class="primary-button">
+                                    Preview
+                                </button>
+                                <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
+                                    Delete
+                                </a>
+                            </section>
                         </section>
                     </section>
-                </section>
-            {% endfor %}
-        {% else %}
-            <h1>You have nothing there!</h1>
-        {% endif %}
+                {% endfor %}
+            {% else %}
+                <h1>You have nothing there!</h1>
+            {% endif %}
+        </section>
     </section>
 
 {% endblock %}
