@@ -17,6 +17,7 @@ main .first-heading {
     color: var(--second-color);
     font-weight:800;
     text-align: center;
+    padding: 0 2rem;
 }
 
 main .welcome-heading {
@@ -25,6 +26,7 @@ main .welcome-heading {
     text-align: center;
     color: var(--second-color);
     margin-top: 2rem;
+    padding: 0 2rem;
 }
 main .welcome-subtitle {
     font-size: 1rem;
@@ -32,4 +34,5 @@ main .welcome-subtitle {
     text-align: center;
     color: var(--second-color);
     margin-top: 2rem;
+    padding: 0 2rem;
 }

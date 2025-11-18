@@ -18,3 +18,27 @@
     align-items: start;
     margin-bottom: 2rem;
 }
+
+@media screen and (max-width: 480px) {
+    .profile-description {
+        flex-direction: column;
+        align-items: center;
+    }
+    .user-icon {
+        margin: 2rem 0;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .profile-description {
+        flex-direction: column;
+        align-items: center;
+    }
+    .user-icon {
+        margin: 2rem 0;
+    }
+}
+
+.profile-options a {
+    width: 100%;
+}

@@ -1,13 +1,12 @@
 
 
 <nav class="navbar" role="navigation">
-    <section>
         {% if session.get('idUser') %}
                 <section class="flex-center" style="column-gap: 2rem;">
                     <section class="app-logo" aria-label="application-logo">
                         <i class="fa-solid fa-square-poll-vertical"></i>
                     </section>
-                    <section class="flex-center" style="column-gap: 2rem;">
+                    <section class="links-container">
                         <a href="{{ url_for('user_data', id=session.get('idUser'))}}">
                             <button class="primary-button" aria-label="login-button">
                                 <span style="font-size: x-large;" aria-hidden="true">
@@ -31,7 +30,7 @@
                         </a>
                     </section>
                 </section>
-                <section style="margin-right: 2rem">
+                <section style="margin-right: 2rem;text-align: center;" class="panel-right">
                     <span aria-label="idUser" class="id-heading">
                         Your ID: {{ session.get('idUser') }}
                     </span>
@@ -50,7 +49,7 @@
                     </section>
                     <h2 class="app-title">E-voting App</h2>
                 </section>
-                <section style="margin-right: 1rem;">
+                <section style="margin-right: 1rem;" class="flex-center panel-right">
                     <a href="{{ url_for('login_user')}}">
                         <button class="primary-button" aria-label="login-button">
                             <span style="font-size: x-large;" aria-hidden="true">
@@ -60,5 +59,4 @@
                     </a>
                 </section>
         {% endif %}
-    </section>
 </nav>

@@ -43,16 +43,16 @@
             <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
         </section>
     {% endif %}
-    <section class="margin-y">
-        <h1 aria-label="error heading" style="font-size: 2.5rem;">Profile description</h1>
+    <section class="margin-y" style="text-align: center;">
+        <h1 aria-label="error heading" style="font-size: 2.0rem;">Profile description</h1>
         <div class="primary-spliter" aria-label="spliter"></div>
     </section>
     <section class="flex-center" style="flex-direction: column;width: 100%;">
-        <section class="flex-center" style="width: 100%;">
+        <section class="flex-center profile-description" style="width: 100%;">
             <i class="fa-solid fa-user-tie user-icon"></i>
             <section class="flex-center" style="flex-direction: column;">
                 <h1 class="user-name-surname">{{ user.name + " " + user.surname }}</h1>
-                <h2 class="ts-xl">{{ user.email }}</h2>
+                <h2 class="ts-lg">{{ user.email }}</h2>
             </section>
         </section>
         {% if permission %}

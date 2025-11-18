@@ -56,7 +56,7 @@
                 </select>
             </form>
         </section>
-        <section style="margin-top: 3rem;margin-bottom: 3rem;">
+        <section style="margin-top: 3rem;margin-bottom: 3rem;" class="votes-grid">
             {% if votes %}
                 {% for element in votes %}
                     <section class="vote-container">
@@ -74,13 +74,13 @@
                             <h3>Vote options</h3>
                             {% for voteOption in element.options %}
                                 <ul>
-                                    <li><span style="font-weight: 700;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
+                                    <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
                                 </ul>
                             {% endfor %}
                         </section>
                         <section class="vote-options-container">
                             <h3>Description</h3>
-                            <p>{{ element.description[:100] }}...</p>
+                            <p>{{ element.description[:100] + "..." if element.description|length > 100 else element.description }}</p>
                         </section>
                         <section class="vote-options-container">
                             <h3>Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
