@@ -5,14 +5,18 @@
     New Vote
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='form') }}">
+{% endblock %}
+
 {% block main %}
 
 {% if values.count %}
-<section style="margin-bottom: 2rem;margin-top: 2rem;">
+<section class="form-title">
     <h1 class="secondary-box">Create new Vote</h1>
 </section>
 
-<form class="card" method="post" style="width: 400px;">
+<form class="card form-card" method="post">
     <section class="input-group">
         <p><i class="fa-solid fa-check-to-slot"></i> vote title</p>
         <input type="text" placeholder="enter vote title" name="voteTitle" aria-label="vote-title-input" value="{{ values.voteTitle }}">
@@ -35,7 +39,7 @@
     </section>
     <section style="margin: 1rem 0;">
         <p style="font-weight: bold;"><i class="fa-solid fa-file"></i> Voting options </p>
-        <section class="flex-center" style="align-items: start;margin-top: 1rem;flex-direction: column;" id="vote-options-container">
+        <section class="flex-center vote-options-container">
             {% for i in range(values.count) %}
                 <section class="input-group">
                     <p>Option {{ i + 1 }}</p>
@@ -44,12 +48,12 @@
             {% endfor %}
         </section>
     </section>
-    <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
-        <span style="font-size: 1.2rem;" aria-hidden="true">
+    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+        <span class="ts-sm" aria-hidden="true">
             Create vote
         </span>
     </button>
-    <section style="margin-top: 1rem;">
+    <section class="errors-container">
         {% if errors %}
             {% for value in errors.values() %}
             <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
@@ -59,32 +63,32 @@
 </form>
 
 
-<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('creating_vote') }}">
-    <span style="font-size: 1.2rem;" aria-hidden="true">
+<a class="primary-button back-button" href="{{ url_for('creating_vote') }}">
+    <span style="font-size: 1.2rem;" class="ts-sm" aria-hidden="true">
         Back
     </span>
 </a>
 
 {% else %}
 
-<section style="margin-bottom: 2rem;margin-top: 2rem;">
+<section class="form-title">
     <h1 class="secondary-box">Count of voting options</h1>
 </section>
 
-<form class="card" method="get" style="width: 400px;">
+<form class="card form-card" method="get">
     <section class="input-group">
         <p><i class="fa-solid fa-check-to-slot"></i> Count of vote options</p>
         <input type="number" placeholder="enter vote options count" name="count" aria-label="vote-count-option-input" value="{{ values.count }}" min="1">
     </section>
-    <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
-        <span style="font-size: 1.2rem;" aria-hidden="true">
+    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+        <span class="ts-sm" aria-hidden="true">
             Next
         </span>
     </button>
 </form>
 
-<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('votes_page') }}">
-    <span style="font-size: 1.2rem;" aria-hidden="true">
+<a class="primary-button back-button" href="{{ url_for('votes_page') }}">
+    <span class="ts-sm" aria-hidden="true">
         Back
     </span>
 </a>

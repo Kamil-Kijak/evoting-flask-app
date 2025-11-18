@@ -1,0 +1,29 @@
+
+.form-title {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.form-card {
+    width: 400px;
+}
+
+.errors-container {
+    margin-top: 1rem;
+}
+
+.back-button {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.vote-options-container {
+    align-items: start;
+    margin-top: 1rem;
+    flex-direction: column;
+}
+
+.not-having-account, .already-having-account {
+    font-size: 1.1rem;
+    margin-top: 2rem;
+}

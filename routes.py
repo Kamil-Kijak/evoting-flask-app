@@ -227,4 +227,5 @@ def uploaded_file(filename):
 
 @app.route('/style')
 def get_style():
-    return send_from_directory('styles', "main.css")
+    styleFile = request.args.get("styleFile", "index")
+    return send_from_directory('styles', f"{styleFile}.css")

@@ -1,11 +1,11 @@
 
 
 <nav class="navbar" role="navigation">
-    <section style="justify-content:space-between;display:flex;width: 100%;align-items: center;">
+    <section>
         {% if session.get('idUser') %}
                 <section class="flex-center" style="column-gap: 2rem;">
                     <section class="app-logo" aria-label="application-logo">
-                        <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
+                        <i class="fa-solid fa-square-poll-vertical"></i>
                     </section>
                     <section class="flex-center" style="column-gap: 2rem;">
                         <a href="{{ url_for('user_data', id=session.get('idUser'))}}">
@@ -46,7 +46,7 @@
         {% else %}
                 <section class="flex-center">
                     <section class="app-logo" aria-label="application-logo">
-                        <i class="fa-solid fa-square-poll-vertical" style="color: white;transform: scale(2);"></i>
+                        <i class="fa-solid fa-square-poll-vertical"></i>
                     </section>
                     <h2 class="app-title">E-voting App</h2>
                 </section>

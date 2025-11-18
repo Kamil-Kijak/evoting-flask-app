@@ -5,11 +5,15 @@
     Log in
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='form') }}">
+{% endblock %}
+
 {% block main %}
-<section style="margin-bottom: 2rem;margin-top: 2rem;">
+<section class="form-title">
     <h1 class="secondary-box">Log in</h1>
 </section>
-<form class="card" method="post" style="width: 400px;">
+<form class="card form-card" method="post">
     <section class="input-group">
         <p><i class="fa-solid fa-envelope"></i> email</p>
         <input type="email" placeholder="e.g. name@domain.com" name="email" aria-label="email-input" value="{{ values.email }}">
@@ -18,12 +22,12 @@
         <p><i class="fa-solid fa-key"></i> password</p>
         <input type="password" placeholder="Enter password" name="password" aria-label="password-input" value="{{ values.password }}">
     </section>
-    <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm">
-        <span style="font-size: 1.2rem;" aria-hidden="true">
+    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+        <span class="ts-sm" aria-hidden="true">
             Log in
         </span>
     </button>
-    <section style="margin-top: 1rem;">
+    <section class="errors-container">
         {% if errors %}
             {% for value in errors.values() %}
             <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
@@ -31,11 +35,11 @@
         {% endif %}
     </section>
 </form>
-<a style="font-size: 1.1rem;margin-top: 2rem;" href="{{ url_for('register_user') }}">
+<a class="not-having-account" href="{{ url_for('register_user') }}">
     I don't have a account
 </a>
-<a class="primary-button" style="margin-top: 2rem;margin-bottom: 2rem;" href="{{ url_for('main_page') }}">
-    <span style="font-size: 1.2rem;" aria-hidden="true">
+<a class="primary-button back-button" href="{{ url_for('main_page') }}">
+    <span class="ts-sm" aria-hidden="true">
         Back
     </span>
 </a>

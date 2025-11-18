@@ -1,0 +1,35 @@
+
+
+footer .copyright-section {
+    background-color: var(--first-color);
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+.copyright-section h2 {
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+main .first-heading {
+    color: var(--second-color);
+    font-weight:800;
+    text-align: center;
+}
+
+main .welcome-heading {
+    font-size: 2.5rem;
+    font-weight:800;
+    text-align: center;
+    color: var(--second-color);
+    margin-top: 2rem;
+}
+main .welcome-subtitle {
+    font-size: 1rem;
+    font-weight:800;
+    text-align: center;
+    color: var(--second-color);
+    margin-top: 2rem;
+}

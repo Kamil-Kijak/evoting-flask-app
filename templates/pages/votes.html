@@ -9,11 +9,15 @@
     {% include "components/navbar.html" %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='votes') }}">
+{% endblock %}
+
 {% block main %}
-    <section class="flex-center" style="flex-direction: column;justify-content: start;height: 100vh;">
-        <section class="flex-center" style="flex-direction: column;margin-top: 3rem;">
+    <section class="flex-center main-container">
+        <section class="flex-center title-container">
             {% if success %}
-                <section style="margin-top: 1rem;">
+                <section class="margin-y">
                     <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
                 </section>
             {% endif %}
@@ -22,21 +26,21 @@
                 <div class="primary-spliter" aria-label="spliter"></div>
             </section>
             <a href="{{ url_for('creating_vote')}}">
-                <button class="primary-button" style="margin-top: 1rem;">
-                    <span style="font-size: 1.8rem;" aria-hidden="true">
+                <button class="primary-button margin-y">
+                    <span class="ts-lg" aria-hidden="true">
                         <i class="fa-solid fa-plus"></i> Create vote
                     </span>
                 </button>
             </a>
         </section>
-        <section style="margin-top: 3rem;flex-direction: column;row-gap: 1rem;" class="flex-center">
+        <section class="flex-center votes-search-container">
             <section>
                 <h1>My votes</h1>
                 <div class="primary-spliter" aria-label="spliter"></div>
             </section>
-            <form method="get" action="{{ url_for('votes_page')}}" style="display: flex;justify-content: space-between;width: 600px;column-gap: 1rem;">
+            <form method="get" action="{{ url_for('votes_page')}}" class="votes-search-form">
                 <button class="primary-button">
-                    <span style="font-size: 1.5rem;" aria-hidden="true">
+                    <span class="ts-md" aria-hidden="true">
                         <i class="fa-solid fa-magnifying-glass"></i> Search
                     </span>
                 </button>
@@ -55,7 +59,7 @@
         <section style="margin-top: 3rem;margin-bottom: 3rem;">
             {% if votes %}
                 {% for element in votes %}
-                    <section style="display: flex;flex-direction: column;max-width: 400px;margin-top: 3rem;" class="vote-container">
+                    <section class="vote-container">
                         <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
                             <h3>{{ element.status }}</h3>
                         </section>
@@ -63,26 +67,26 @@
                             <h2 style="text-align: center;">{{ element.title }}</h2>
                             <div class="primary-spliter"></div>
                         </section>
-                        <section class="flex-center" style="margin-top: 1rem;column-gap: .5rem;">
+                        <section class="flex-center vote-options-container">
                             <p>{{ element.startDate }} - {{ element.endDate }}</p>
                         </section>
-                        <section style="margin-top: 1rem;column-gap: .5rem;">
-                            <h3 style="margin-bottom: .5rem;">Vote options</h3>
+                        <section class="vote-options-container">
+                            <h3>Vote options</h3>
                             {% for voteOption in element.options %}
-                                <ul style="margin-left: 1rem;">
+                                <ul>
                                     <li><span style="font-weight: 700;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
                                 </ul>
                             {% endfor %}
                         </section>
-                        <section style="margin-top: 1rem;column-gap: .5rem;">
-                            <h3 style="margin-bottom: .5rem;">Description</h3>
+                        <section class="vote-options-container">
+                            <h3>Description</h3>
                             <p>{{ element.description[:100] }}...</p>
                         </section>
-                        <section style="margin-top: 1rem;column-gap: .5rem;">
-                            <h3 style="margin-bottom: .5rem;">Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
+                        <section class="vote-options-container">
+                            <h3>Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
                         </section>
-                        <section style="margin-top: 1rem;column-gap: .5rem;">
-                            <h3 style="margin-bottom: .5rem;">Actions</h3>
+                        <section class="vote-options-container">
+                            <h3>Actions</h3>
                             <section class="flex-center" style="justify-content: space-around;">
                                 <button class="primary-button">
                                     Preview
