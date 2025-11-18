@@ -1,0 +1,27 @@
+
+
+.forbidden-card {
+    width: 400px;
+}
+
+.confirm-heading {
+    text-align: center;
+    margin: 2.2rem;
+}
+.confirm-subheading {
+    text-align: center;
+}
+.forbidden-card a {
+    margin-top: 2rem;
+}
+
+.card .confirm-container {
+    row-gap: .5rem;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.confirm-container a {
+    margin-top: 1rem;
+    width: 100%;
+}

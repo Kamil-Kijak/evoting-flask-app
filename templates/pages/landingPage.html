@@ -5,6 +5,10 @@
     {% include "components/navbar.html" %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='landingPage') }}">
+{% endblock %}
+
 {% block main %}
 
 <h1 class="welcome-heading" role="heading" aria-label="welcoming"><span style="font-size: 3rem;color: black;">Welcome</span><br> to E-voting Application</h1>
@@ -14,17 +18,17 @@
 <p class="welcome-subtitle" aria-label="register-instruction" style="font-size: 1.4rem;">
     Register now, just by clicking the button below
 </p>
-<section style="margin: 2rem 0;">
+<section class="margin-y">
     <a href="{{ url_for('register_user') }}">
         <button class="primary-button" aria-label="register button">
-            <span style="font-size: 1.8rem;" aria-hidden="true">
+            <span class="ts-lg" aria-hidden="true">
                 Get start
             </span>
         </button>
     </a>
 </section>
 
-<p class="welcome-subtitle" aria-label="having-account-paragraph" style="font-size: 1.4rem;">
+<p class="welcome-subtitle ts-md" aria-label="having-account-paragraph">
     **if you have an account, just log in 
 </p>
 

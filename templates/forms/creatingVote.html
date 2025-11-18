@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    New Vote
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='form') }}">
+{% endblock %}
+
+{% block main %}
+
+{% if values.count %}
+<section class="form-title">
+    <h1 class="secondary-box">Create new Vote</h1>
+</section>
+
+<form class="card form-card" method="post">
+    <section class="input-group">
+        <p><i class="fa-solid fa-check-to-slot"></i> vote title</p>
+        <input type="text" placeholder="enter vote title" name="voteTitle" aria-label="vote-title-input" value="{{ values.voteTitle }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-calendar-days"></i> voting start date</p>
+        <input type="date" name="startDate" aria-label="start-date-input" value="{{ values.startDate }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-calendar-days"></i> voting end date</p>
+        <input type="date" name="endDate" aria-label="end-date-input" value="{{ values.endDate }}">
+    </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-file"></i> description</p>
+        <textarea name="description" aria-label="description-input" placeholder="enter vote description" style="height: 100px;">{{ values.description }}</textarea>
+    </section>
+    <section class="checkbox-group">
+        <p><i class="fa-solid fa-square-poll-horizontal"></i> Real time results</p>
+        <input type="checkbox" name="realTimeResults" aria-label="realTimeResults-checkbox" value="{{ values.realTimeResults }}">
+    </section>
+    <section style="margin: 1rem 0;">
+        <p style="font-weight: bold;"><i class="fa-solid fa-file"></i> Voting options </p>
+        <section class="flex-center vote-options-container">
+            {% for i in range(values.count) %}
+                <section class="input-group">
+                    <p>Option {{ i + 1 }}</p>
+                    <input type="text" name="voteOptions" aria-label="option{{ i + 1}}-input" placeholder="Enter vote option" value="{{ values.voteOptions[i] if values.voteOptions }}">
+                </section>
+            {% endfor %}
+        </section>
+    </section>
+    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+        <span class="ts-sm" aria-hidden="true">
+            Create vote
+        </span>
+    </button>
+    <section class="errors-container">
+        {% if errors %}
+            {% for value in errors.values() %}
+            <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
+            {% endfor %}
+        {% endif %}
+    </section>
+</form>
+
+
+<a class="primary-button back-button" href="{{ url_for('creating_vote') }}">
+    <span style="font-size: 1.2rem;" class="ts-sm" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% else %}
+
+<section class="form-title">
+    <h1 class="secondary-box">Count of voting options</h1>
+</section>
+
+<form class="card form-card" method="get">
+    <section class="input-group">
+        <p><i class="fa-solid fa-check-to-slot"></i> Count of vote options</p>
+        <input type="number" placeholder="enter vote options count" name="count" aria-label="vote-count-option-input" value="{{ values.count }}" min="1">
+    </section>
+    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+        <span class="ts-sm" aria-hidden="true">
+            Next
+        </span>
+    </button>
+</form>
+
+<a class="primary-button back-button" href="{{ url_for('votes_page') }}">
+    <span class="ts-sm" aria-hidden="true">
+        Back
+    </span>
+</a>
+
+{% endif %}
+
+
+{% endblock %}

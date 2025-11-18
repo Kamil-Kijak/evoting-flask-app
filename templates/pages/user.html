@@ -13,6 +13,10 @@
     {% endif %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='user') }}">
+{% endblock %}
+
 {% block header %}
     {% include "components/navbar.html" %}
 {% endblock %}
@@ -24,10 +28,10 @@
         <div class="primary-spliter" aria-label="spliter"></div>
     </section>
     <section class="flex-center" style="flex-direction: column;">
-        <p aria-label="error text" style="margin: 2rem 0;font-size: larger;text-align: center;">User with this ID is not existing<br> Check correctness of user ID</p>
+        <p aria-label="error text" class="margin-y ts-lg" style="text-align: center;">User with this ID is not existing<br> Check correctness of user ID</p>
         <a href="{{ url_for('main_page')}}">
             <button class="primary-button" aria-label="back button">
-                <span style="font-size: 1.8rem;" aria-hidden="true">
+                <span class="ts-lg" aria-hidden="true">
                     Back
                 </span>
             </button>
@@ -35,45 +39,45 @@
     </section>
     {% else %}
     {% if success %}
-        <section style="margin-top: 1rem;">
+        <section class="margin-y">
             <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
         </section>
     {% endif %}
-    <section style="margin: 3rem 0;">
+    <section class="margin-y">
         <h1 aria-label="error heading" style="font-size: 2.5rem;">Profile description</h1>
         <div class="primary-spliter" aria-label="spliter"></div>
     </section>
     <section class="flex-center" style="flex-direction: column;width: 100%;">
         <section class="flex-center" style="width: 100%;">
-            <i class="fa-solid fa-user-tie" style="transform: scale(5);height: 100%;margin: 1.5rem 6rem 0 0;"></i>
+            <i class="fa-solid fa-user-tie user-icon"></i>
             <section class="flex-center" style="flex-direction: column;">
-                <h1 style="font-size: 3rem;margin: 2rem 0;">{{ user.name + " " + user.surname }}</h1>
-                <h2 style="font-size: 2rem;">{{ user.email }}</h2>
+                <h1 class="user-name-surname">{{ user.name + " " + user.surname }}</h1>
+                <h2 class="ts-xl">{{ user.email }}</h2>
             </section>
         </section>
         {% if permission %}
-        <section style="margin: 3rem 0;">
+        <section class="margin-y">
             <h1 aria-label="error heading">Profile options</h1>
             <div class="primary-spliter" aria-label="spliter"></div>
         </section>
-        <section class="flex-center" style="flex-direction: column;row-gap: 1rem;justify-content: start;align-items: start;margin-bottom: 2rem;">
+        <section class="flex-center profile-options">
             <a href="{{ url_for('changing_email') }}">
                 <button class="secondary-button" aria-label="changing email button">
-                    <span aria-hidden="true" style="font-size: 2rem;">
+                    <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-envelope"></i> Change email adress
                     </span>
                 </button>
             </a>
             <a href="{{ url_for('changing_password') }}">
                 <button class="secondary-button">
-                    <span aria-hidden="true" style="font-size: 2rem;">
+                    <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-key"></i> Change password
                     </span>
                 </button>
             </a>
             <a href="{{ url_for('changing_data') }}">
                 <button class="secondary-button">
-                    <span aria-hidden="true" style="font-size: 2rem;">
+                    <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-user"></i> Change name, surname
                     </span>
                 </button>

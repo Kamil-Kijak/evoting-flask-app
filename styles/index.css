@@ -1,0 +1,288 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --first-color:#cc0000;
+    --hover-first-color:#e31010;
+    --second-color:#2A2929;
+    --hover-second-color:#3C3C3C;
+    --error-background-color:#f19595;
+    --success-color:#33A008;
+    --success-background-color:#98d580;
+    --warning-color:#b79f00;
+    --warning-background-color:#e9df6b;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-start {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+a {
+    color: inherit;
+}
+textarea {
+    resize: none;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-group {
+    margin: .3rem 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+.input-group p {
+    font-weight: bold;
+}
+.input-group input, textarea {
+    height: 40px;
+    font-size: 1rem;
+    padding: .2rem .4rem;
+    border: 2px solid var(--second-color);
+    border-radius: 5px;
+}
+
+.checkbox-group {
+    margin: .3rem 0;
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.checkbox-group input {
+    height: 40px;
+    width: 20px;
+    font-size: 1rem;
+    padding: .2rem .4rem;
+    border: 2px solid var(--second-color);
+    border-radius: 5px;
+}
+
+.checkbox-group p {
+    font-weight: bold;
+}
+
+.primary-select {
+    height: 40px;
+    font-size: 1rem;
+    padding: .2rem .4rem;
+    border: 2px solid var(--second-color);
+    border-radius: 5px;
+}
+
+.primary-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--second-color);
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+.primary-button:hover {
+    background-color: var(--hover-second-color);
+}
+
+.secondary-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 0;
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+.secondary-button:hover {
+    background-color: var(--first-color);
+    color: white;
+}
+
+.danger-button {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--first-color);
+    transition:all 0.1s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+.danger-button:hover {
+    background-color: var(--hover-first-color);
+}
+
+.primary-box {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--second-color);
+}
+
+.secondary-box {
+    padding: .5rem 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+    background-color: var(--first-color);
+}
+
+.error-message {
+    padding: .5rem;
+    background-color: var(--error-background-color);
+    color: var(--first-color);
+    font-weight: bold;
+    border: 3px solid var(--first-color);
+    border-radius: 5px;
+    margin: .5rem 0;
+}
+.success-message {
+    padding: .5rem;
+    background-color: var(--success-background-color);
+    color: var(--success-color);
+    font-weight: bold;
+    border: 3px solid var(--success-color);
+    border-radius: 5px;
+    margin: .5rem 0;
+}
+
+.warning-message {
+    padding: .5rem;
+    background-color: var(--warning-background-color);
+    color: var(--warning-color);
+    font-weight: bold;
+    border: 3px solid var(--warning-color);
+    border-radius: 5px;
+    margin: .5rem 0;
+}
+
+.primary-spliter {
+    height: 5px;
+    border-radius: 10px;
+    background-color: var(--first-color);
+}
+
+.vote-container {
+    border: 3px solid var(--second-color);
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin-bottom: 3rem;
+}
+
+.vote-options-container {
+    margin-top: 1rem;
+    column-gap: .5rem;
+}
+
+.vote-options-container h3 {
+    margin-bottom: .5rem;
+}
+.vote-options-container ul {
+    margin-left: 1rem;
+}
+.vote-options-container > .vote-description {
+    margin-top: 1rem;
+    column-gap: .5rem;
+}
+.vote-options-container > .vote-description h3 {
+    margin-bottom: .5rem;
+}
+
+.margin-y {
+    margin: 2rem 0;
+}
+
+.ts-xl {
+    font-size: 2rem;
+}
+.ts-lg {
+    font-size: 1.8rem;
+}
+.ts-md {
+    font-size: 1.4rem;
+}
+.ts-sm {
+    font-size: 1.2rem;
+}
+
+
+header nav {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: var(--first-color);
+    column-gap: .5rem;
+    color: white;
+}
+
+header nav > section {
+    justify-content:space-between;
+    display:flex;
+    width: 100%;
+    align-items: center;
+}
+
+
+header nav .app-logo {
+    margin-left: 1.5rem;
+    margin-top: 1.5rem;
+    width: 40px;
+    height: 40px;
+}
+header nav .app-logo i {
+    color: white;
+    transform: scale(2);
+}
+
+header nav .id-heading {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.card {
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 25px 3px var(--second-color);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}

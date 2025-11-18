@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Are you sure?
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='delete') }}">
+{% endblock %}
+
+{% block main %}
+
+{% if forbidden %}
+    <section class="card forbidden-card">
+        <h1 class="confirm-heading">Forbidden</h1>
+        <h2 class="confirm-subheading">You don't have access to this resource</h2>
+        <a href="{{ url_for('votes_page') }}">
+            <button class="primary-button" style="width: 100%;">
+                <span class="ts-lg">
+                    Back
+                </span>
+            </button>
+        </a>
+    </section>
+{% else %}
+    <form class="card" method="post" style="width: 400px;">
+        <h1 class="confirm-heading"></h1>>Confirm delete</h1>
+        <h2 class="confirm-subheading"></h2>>Are you sure?</h2>
+        <section class="flex-center confirm-container">
+            <button class="danger-button" type="submit" style="width: 100%;">
+                <span class="ts-lg">
+                    YES
+                </span>
+            </button>
+            <a href="{{ url_for('votes_page') }}">
+                <button class="primary-button" style="width: 100%;" type="button">
+                    <span class="ts-lg">
+                        NO
+                    </span>
+                </button>
+            </a>
+        </section>
+        
+    </form>
+{% endif %}
+
+{% endblock %}

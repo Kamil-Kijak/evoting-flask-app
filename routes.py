@@ -2,9 +2,9 @@
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
-from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema
+from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema, voteSchema
 from marshmallow import ValidationError
-from database.models import User
+from database.models import User, Vote, VoteOption
 from database.models import db
 
 
@@ -15,6 +15,81 @@ def main_page():
     if not session.get("idUser"):
         return redirect(url_for("welcome_page"))
     return render_template("pages/main.html")
+
+@app.route("/votes")
+def votes_page():
+    id = session.get("idUser")
+    if id:
+        statusFilter = request.args.get("status")
+        titleFilter = request.args.get("titleFilter", '')
+        success = request.args.get("successMessage")
+        votes = db.session.query(Vote).filter(Vote.idUser == id).filter(Vote.title.like(f"%{titleFilter}%")).all()
+        votes = [vote.to_dict() for vote in votes] if len(votes) > 0 else None
+        if statusFilter:
+            votes = [vote for vote in votes if vote["status"] == statusFilter]
+        return render_template("pages/votes.html", votes=votes, success=success)
+    else:
+        return redirect(url_for("welcome_page"))
+    
+
+@app.route("/deleting_vote", methods=["GET", "POST"])
+def deleting_vote():
+    id = session.get("idUser")
+    if id:
+        idVote = request.args.get("idVote")
+        ownership = db.session.query(Vote).filter(Vote.id == idVote).filter(Vote.idUser == id).count()
+        if request.method == "POST":
+            if ownership == 1:
+                vote = db.session.query(Vote).filter(Vote.id == idVote).first()
+                db.session.delete(vote)
+                db.session.commit()
+                return redirect(url_for("votes_page", successMessage="Vote deleted successfully"))
+            else:
+                return redirect(url_for("votes_page"))
+        else:
+            return render_template("confirms/delete.html", forbidden=ownership == 0)
+    else:
+        return redirect(url_for("welcome_page"))
+
+
+@app.route("/creating_vote", methods=["GET", "POST"])
+def creating_vote():
+    id = session.get("idUser")
+    if id:
+        count = request.args.get("count")
+        if count:
+            if request.method == "POST":
+                # creating vote
+                data = request.form.to_dict()
+                voteOptions = request.form.getlist("voteOptions")
+                data["voteOptions"] = voteOptions
+                data["realTimeResults"] = "realTimeResults" in data
+                try:
+                    voteSchema.load(data)
+                except ValidationError as err:
+                    data["count"] = int(count)
+                    return render_template("forms/creatingVote.html", errors=err.messages, values=data)
+                vote = Vote(
+                    title=data.get("voteTitle"),
+                    startDate=data.get("startDate"),
+                    endDate=data.get("endDate"),
+                    description=data.get("description"),
+                    realTimeResults=data.get("realTimeResults"),
+                    idUser=id
+                )
+                voteOptions=[
+                    VoteOption(idVote=vote.id, name=name) for name in voteOptions
+                ]
+                vote.options = voteOptions
+                db.session.add(vote)
+                db.session.commit()
+                return redirect(url_for("votes_page", successMessage="Created new Vote"))
+            else:
+                return render_template("forms/creatingVote.html", values={"count":int(count)})
+        else:
+            return render_template("forms/creatingVote.html", values={})
+    else:
+        return redirect(url_for("welcome_page"))
 
 
 @app.route("/votes")
@@ -159,4 +234,5 @@ def uploaded_file(filename):
 
 @app.route('/style')
 def get_style():
-    return send_from_directory('styles', "main.css")
+    styleFile = request.args.get("styleFile", "index")
+    return send_from_directory('styles', f"{styleFile}.css")

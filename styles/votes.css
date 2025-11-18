@@ -1,0 +1,25 @@
+
+
+.main-container {
+    flex-direction: column;
+    justify-content: start;
+    height: 100vh;
+}
+
+.title-container {
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+.votes-search-container {
+    margin-top: 3rem;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.votes-search-form {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    column-gap: 1rem;
+}
