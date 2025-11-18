@@ -92,12 +92,6 @@ def creating_vote():
         return redirect(url_for("welcome_page"))
 
 
-@app.route("/votes")
-def votes_page():
-    if not session.get("idUser"):
-        return redirect(url_for("welcome_page"))
-    return render_template("pages/votes.html")
-
 
 @app.route("/welcome")
 def welcome_page():
