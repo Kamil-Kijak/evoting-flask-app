@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Are you sure?
+{% endblock %}
+
+{% block main %}
+
+{% if forbidden %}
+    <section class="card" style="width: 400px;">
+        <h1 style="text-align: center;margin: 2.2rem;">Forbidden</h1>
+        <h2 style="text-align: center;">You don't have access to this resource</h2>
+        <a href="{{ url_for('votes_page') }}" style="margin-top: 2rem;">
+            <button class="primary-button" style="width: 100%;">
+                <span style="font-size: 1.8rem;">
+                    Back
+                </span>
+            </button>
+        </a>
+    </section>
+{% else %}
+    <form class="card" method="post" style="width: 400px;">
+        <h1 style="text-align: center;margin: 2.2rem;">Confirm delete</h1>
+        <h2 style="text-align: center;">Are you sure?</h2>
+        <section style="row-gap: .5rem;flex-direction: column;margin-top: 2rem;" class="flex-center">
+            <button class="danger-button" type="submit" style="width: 100%;">
+                <span style="font-size: 1.8rem;">
+                    YES
+                </span>
+            </button>
+            <a href="{{ url_for('votes_page') }}" style="margin-top: 1rem;width: 100%;">
+                <button class="primary-button" style="width: 100%;" type="button">
+                    <span style="font-size: 1.8rem;">
+                        NO
+                    </span>
+                </button>
+            </a>
+        </section>
+        
+    </form>
+{% endif %}
+
+{% endblock %}
