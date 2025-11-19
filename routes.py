@@ -16,6 +16,19 @@ def main_page():
         return redirect(url_for("welcome_page"))
     return render_template("pages/main.html")
 
+
+@app.route("/preview/<idVote>", methods=["GET", "POST"])
+def preview(idVote):
+    id = session.get("idUser")
+    if id:
+        vote = db.session.query(Vote).filter(Vote.id == idVote).first()
+        if request.method == "POST":
+            pass
+        else:
+            return render_template("pages/preview.html", vote=vote)
+    else:
+        return redirect(url_for("welcome_page"))
+
 @app.route("/votes")
 def votes_page():
     id = session.get("idUser")

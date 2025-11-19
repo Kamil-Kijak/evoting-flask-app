@@ -74,7 +74,11 @@
                             <h3>Vote options</h3>
                             {% for voteOption in element.options %}
                                 <ul>
-                                    <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
+                                    {% if element.realTimeResults or element.status == "ended" %}
+                                        <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
+                                    {% else %}
+                                        <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span></li>
+                                    {% endif %}
                                 </ul>
                             {% endfor %}
                         </section>
@@ -88,9 +92,9 @@
                         <section class="vote-options-container">
                             <h3>Actions</h3>
                             <section class="flex-center" style="justify-content: space-around;">
-                                <button class="primary-button">
+                                <a href="{{ url_for('preview', idVote=element.id) }}" class="primary-button">
                                     Preview
-                                </button>
+                                </a>
                                 <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
                                     Delete
                                 </a>
