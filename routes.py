@@ -22,10 +22,12 @@ def preview(idVote):
     id = session.get("idUser")
     if id:
         vote = db.session.query(Vote).filter(Vote.id == idVote).first()
+        user = db.session.query(User).filter(User.id == vote.idUser).first()
         if request.method == "POST":
             pass
         else:
-            return render_template("pages/preview.html", vote=vote)
+            originPage = request.args.get("originPage", "votes_page")
+            return render_template("pages/preview.html", vote=vote.to_dict(), user=user.to_dict(), originPage=originPage)
     else:
         return redirect(url_for("welcome_page"))
 

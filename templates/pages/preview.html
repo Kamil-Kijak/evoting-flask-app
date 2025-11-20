@@ -20,13 +20,62 @@
             <h1>{{ vote.title }}</h1>
             <div class="primary-spliter"></div>
         </section>
+        <section class="author">
+            <h3>Vote created by: {{ user.name + " " + user.surname}}</h3>
+            <a href="{{ url_for('user_data', id=user.id) }}" class="primary-button">
+                View author
+            </a>
+        </section>
         <section class="dates-container">
-            <section>
-                Start date: {{ vote.startDate }}
+            <section class="{{ 'success-message' if vote.status == 'In progress' else 'warning-message' if vote.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
+                <h3>{{ vote.status }}</h3>
             </section>
-            <section>
-                End date: {{ vote.endDate }}
+            <section class="flex-center">
+                <p>Start date: {{ vote.startDate }}</p>
+                <p>End date: {{ vote.endDate }}</p>
             </section>
         </section>
+        <section class="description-title">
+            <h2 style="text-align: center;">Description</h2>
+            <div class="primary-spliter"></div>
+        </section>
+        <section class="description">
+            <section>
+                <p>{{ vote.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque, impedit numquam vero assumenda reprehenderit et optio suscipit totam velit dolore beatae inventore facilis. Vel, optio qui? Magni, aliquid culpa!</p>
+            </section>
+        </section>
+        <section class="realtime-results">
+            <h3>Real time results: {{ 'YES' if vote.realTimeResults else 'NO' }}</h3>
+        </section>
+        <section class="options-title">
+            <h2 style="text-align: center;">Vote Options</h2>
+            <div class="primary-spliter"></div>
+        </section>
+        <section class="votes-options">
+            {% for voteOption in vote.options %}
+                {% if vote.realTimeResults or vote.status == "ended" %}
+                    <p><span style="font-weight: bold;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</p>
+                {% else %}
+                    <p><span style="font-weight: bold;"><i class="fa-solid fa-lock"></i> {{ voteOption.name }}</span>  results hidden</p>
+                {% endif %}
+            {% endfor %}
+        </section>
+        {% if not (vote.realTimeResults or vote.status == "ended") %}
+            <p class="results-info-tip" style="font-weight: bold;margin-top: 2rem;">*Vote results will be displayed when voting have been ended*</p>
+        {% endif %}
+        <a href="{{ url_for(originPage)}}">
+            <button class="primary-button back-button">
+                <span class="ts-xl">
+                    Vote!
+                </span>
+            </button>
+        </a>
+        <a href="{{ url_for(originPage)}}">
+            <button class="primary-button back-button">
+                <span class="ts-lg">
+                    Back
+                </span>
+            </button>
+        </a>
     </section>
 {% endblock %}

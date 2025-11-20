@@ -92,7 +92,7 @@
                         <section class="vote-options-container">
                             <h3>Actions</h3>
                             <section class="flex-center" style="justify-content: space-around;">
-                                <a href="{{ url_for('preview', idVote=element.id) }}" class="primary-button">
+                                <a href="{{ url_for('preview', idVote=element.id, originPage='votes_page') }}" class="primary-button">
                                     Preview
                                 </a>
                                 <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
