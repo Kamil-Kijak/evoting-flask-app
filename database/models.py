@@ -22,6 +22,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     votes = db.relationship('Vote', backref='user', lazy=True, passive_deletes=True)
+    votings = db.relationship('Voting', backref='user', lazy=True, passive_deletes=True)
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -33,6 +34,7 @@ class User(db.Model):
             "surname":self.surname,
             "email":self.email,
             "votes":[vote.to_dict() for vote in self.votes],
+            "votings":self.votings
         }
 
 class Vote(db.Model):

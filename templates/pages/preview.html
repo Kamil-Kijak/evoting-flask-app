@@ -41,7 +41,7 @@
         </section>
         <section class="description">
             <section>
-                <p>{{ vote.description }} Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque, impedit numquam vero assumenda reprehenderit et optio suscipit totam velit dolore beatae inventore facilis. Vel, optio qui? Magni, aliquid culpa!</p>
+                <p>{{ vote.description }}</p>
             </section>
         </section>
         <section class="realtime-results">
@@ -61,15 +61,24 @@
             {% endfor %}
         </section>
         {% if not (vote.realTimeResults or vote.status == "ended") %}
-            <p class="results-info-tip" style="font-weight: bold;margin-top: 2rem;">*Vote results will be displayed when voting have been ended*</p>
+            <p class="results-info-tip" style="font-weight: bold;margin-top: 2rem;">*Vote results will be displayed when voting has ended*</p>
         {% endif %}
-        <a href="{{ url_for(originPage)}}">
-            <button class="primary-button back-button">
-                <span class="ts-xl">
-                    Vote!
-                </span>
-            </button>
-        </a>
+        {% if not alreadyVoted %}
+            <section class="error-message" style="margin-top: 1rem;">
+                You haven't voted yet!
+            </section>
+            <a href="{{ url_for('voting', idVote=vote.id)}}">
+                <button class="primary-button back-button">
+                    <span class="ts-xl">
+                        Vote!
+                    </span>
+                </button>
+            </a>
+        {% else %}
+            <section class="success-message" style="margin-top: 1rem;">
+                You already voted!
+            </section>
+        {% endif %}
         <a href="{{ url_for(originPage)}}">
             <button class="primary-button back-button">
                 <span class="ts-lg">

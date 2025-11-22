@@ -1,10 +1,11 @@
 
+import datetime
 import bcrypt
 from flask import send_from_directory, render_template, session, redirect, url_for, request
 from app import app
 from validation import userSchema, changingPasswordSchema, changingEmailSchema, changingUserDataSchema, voteSchema
 from marshmallow import ValidationError
-from database.models import User, Vote, VoteOption
+from database.models import User, Vote, VoteOption, Voting
 from database.models import db
 
 
@@ -17,6 +18,32 @@ def main_page():
     return render_template("pages/main.html")
 
 
+@app.route("/voting/<idVote>", methods=["GET", "POST"])
+def voting(idVote):
+    id = session.get("idUser")
+    if id:
+        user = db.session.query(User).filter(User.id == id).first()
+        vote = db.session.query(Vote).filter(Vote.id == idVote).first()
+        alreadyVoted = any(any(voting.idVoteOption == option.id for option in vote.options) for voting in user.votings)
+        if not (alreadyVoted or vote.endDate <= datetime.datetime.today()):
+            if request.method == "POST":
+                data = request.form.to_dict()
+                chosenOption = data.get("voteOption")
+                voting = Voting(
+                    idVoteOption=chosenOption,
+                    idUser=id
+                )
+                db.session.add(voting)
+                db.session.commit()
+                return redirect(url_for("preview", idVote=idVote))
+            else:
+                # displaying vote options
+                return render_template("forms/voting.html", vote=vote)
+        else:
+            return redirect(url_for("preview", idVote=idVote))
+    else:
+        return redirect(url_for("welcome_page"))
+
 @app.route("/preview/<idVote>", methods=["GET", "POST"])
 def preview(idVote):
     id = session.get("idUser")
@@ -27,7 +54,8 @@ def preview(idVote):
             pass
         else:
             originPage = request.args.get("originPage", "votes_page")
-            return render_template("pages/preview.html", vote=vote.to_dict(), user=user.to_dict(), originPage=originPage)
+            alreadyVoted = any(any(voting.idVoteOption == option.id for option in vote.options) for voting in user.votings)
+            return render_template("pages/preview.html", vote=vote.to_dict(), user=user.to_dict(), originPage=originPage, alreadyVoted=alreadyVoted)
     else:
         return redirect(url_for("welcome_page"))
 

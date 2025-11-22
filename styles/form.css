@@ -27,3 +27,11 @@
     font-size: 1.1rem;
     margin-top: 2rem;
 }
+
+.vote-option {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 3rem;
+    margin-bottom: 1rem;
+}

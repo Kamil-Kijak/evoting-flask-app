@@ -1,0 +1,36 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+    Voting - E-voting app
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('get_style', styleFile='form') }}">
+{% endblock %}
+
+{% block main %}
+<section class="form-title">
+    <h1 class="secondary-box">{{ vote.title }}</h1>
+</section>
+<form class="card form-card" method="post">
+    {% for option in vote.options %}
+        <section class="vote-option">
+            <h2>{{ option.name }}</h2>
+            <button class="primary-button ts-lg" role="submit" name="voteOption" value="{{ option.id }}">
+                Vote
+            </button>
+        </section>
+    {% endfor %}
+    <p style="text-align: center;font-weight: bold;margin-top: 1rem;" class="ts-md">
+        *You can vote only once*
+    </p>
+</form>
+
+<a class="primary-button back-button" href="{{ url_for('preview', idVote=vote.id) }}">
+    <span class="ts-sm" aria-hidden="true">
+        Back
+    </span>
+</a>
+{% endblock %}
