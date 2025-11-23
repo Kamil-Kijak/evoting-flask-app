@@ -12,23 +12,23 @@
 
 {% block main %}
 <section class="form-title">
-    <h1 class="secondary-box">{{ vote.title }}</h1>
+    <h1 class="secondary-box" aria-label="form title">{{ vote.title }}</h1>
 </section>
 <form class="card form-card" method="post">
     {% for option in vote.options|sort(attribute='name') %}
         <section class="vote-option">
             <h2>{{ option.name }}</h2>
-            <button class="primary-button ts-lg" role="submit" name="voteOption" value="{{ option.id }}">
+            <button class="primary-button ts-lg" role="submit" name="voteOption" value="{{ option.id }}" aria-label="vote for {{ option.name }}">
                 Vote
             </button>
         </section>
     {% endfor %}
-    <p style="text-align: center;font-weight: bold;margin-top: 1rem;" class="ts-md">
+    <p style="text-align: center;font-weight: bold;margin-top: 1rem;" class="ts-md" aria-label="vote tip">
         *You can vote only once*
     </p>
 </form>
 
-<a class="primary-button back-button" href="{{ url_for('preview', idVote=vote.id) }}">
+<a class="primary-button back-button" href="{{ url_for('preview', idVote=vote.id) }}" aria-label="back button">
     <span class="ts-sm" aria-hidden="true">
         Back
     </span>

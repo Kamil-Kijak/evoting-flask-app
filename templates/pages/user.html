@@ -24,7 +24,7 @@
 {% block main %}
     {% if not found %}
     <section>
-        <h1 aria-label="error heading">User Not found</h1>
+        <h1 aria-label="not found message">User Not found</h1>
         <div class="primary-spliter" aria-label="spliter"></div>
     </section>
     <section class="flex-center" style="flex-direction: column;">
@@ -40,7 +40,7 @@
     {% else %}
     {% if success %}
         <section class="margin-y">
-            <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+            <p class="success-message" aria-label="success message"><i class="fa-solid fa-check"></i> {{ success }}</p>
         </section>
     {% endif %}
     <section class="margin-y" style="text-align: center;">
@@ -51,8 +51,8 @@
         <section class="flex-center profile-description" style="width: 100%;">
             <i class="fa-solid fa-user-tie user-icon"></i>
             <section class="flex-center" style="flex-direction: column;">
-                <h1 class="user-name-surname">{{ user.name + " " + user.surname }}</h1>
-                <h2 class="ts-lg">{{ user.email }}</h2>
+                <h1 class="user-name-surname" aria-label="user data">{{ user.name + " " + user.surname }}</h1>
+                <h2 class="ts-lg" aria-label="user email">{{ user.email }}</h2>
             </section>
         </section>
         {% if permission %}
@@ -62,21 +62,21 @@
         </section>
         <section class="flex-center profile-options">
             <a href="{{ url_for('changing_email') }}">
-                <button class="secondary-button" aria-label="changing email button">
+                <button class="secondary-button" aria-label="change email adress button">
                     <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-envelope"></i> Change email adress
                     </span>
                 </button>
             </a>
             <a href="{{ url_for('changing_password') }}">
-                <button class="secondary-button">
+                <button class="secondary-button" aria-label="change password button">
                     <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-key"></i> Change password
                     </span>
                 </button>
             </a>
             <a href="{{ url_for('changing_data') }}">
-                <button class="secondary-button">
+                <button class="secondary-button" aria-label="change name, surname button">
                     <span aria-hidden="true" class="ts-xl">
                         <i class="fa-solid fa-user"></i> Change name, surname
                     </span>

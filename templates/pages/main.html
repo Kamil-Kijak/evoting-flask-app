@@ -19,7 +19,7 @@
         <h1>Search votes</h1>
         <div class="primary-spliter"></div>
     </section>
-    <form class="search" method="get">
+    <form class="search" method="get" aria-label="search form">
         <section class="options">
             <section class="input-group">
                 <p>Title</p>
@@ -27,7 +27,7 @@
             </section>
             <section class="input-group">
                 <p>Vote status</p>
-                <select name="statusFilter" class="primary-select" aria-label="status filter input">
+                <select name="statusFilter" class="primary-select" aria-label="status filter select">
                     <option value="In progress" {{ 'selected' if request.args.get("statusFilter") == 'In progress' or request.args.get("statusFilter") == '' }}>In progress</option>
                     <option value="Waiting" {{ 'selected' if request.args.get("statusFilter") == 'Waiting' }}>Waiting</option>
                     <option value="Ended" {{ 'selected' if request.args.get("statusFilter") == 'Ended' }}>Ended</option>
@@ -43,7 +43,7 @@
             </section>
         </section>
         <section class="flex-center">
-            <button type="submit" class="primary-button">
+            <button type="submit" class="primary-button" aria-label="search button">
                 <span class="ts-md" aria-hidden="true">
                     <i class="fa-solid fa-magnifying-glass"></i> Search
                 </span>
@@ -53,32 +53,32 @@
     {% if votes %}
                 <section style="margin-top: 3rem;margin-bottom: 3rem;" class="votes-grid">
                 {% for element in votes %}
-                    <section class="vote-container">
-                        <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
+                    <section class="vote-container" aria-label="vote">
+                        <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;" aria-label="vote status">
                             <h3>{{ element.status }}</h3>
                         </section>
                         {% if element.status == "Ended" %}
-                            <section class="success-message" style="text-align: center;">
+                            <section class="success-message" style="text-align: center;" aria-label="vote winner">
                                 <h3>Winner: {{ (element.options|max(attribute='votingCount')).name }}</h3>
                             </section>
                         {% endif %}
                         <section>
-                            <h2 style="text-align: center;">{{ element.title }}</h2>
+                            <h2 style="text-align: center;" aria-label="vote title">{{ element.title }}</h2>
                             <div class="primary-spliter"></div>
                         </section>
                         <section class="flex-center" style="flex-direction: column;">
-                            <h3 style="text-align: center;margin: 1rem 0;">Created by: {{ element.user.name + " " + element.user.surname}}</h3>
+                            <h3 style="text-align: center;margin: 1rem 0;" aria-label="creator">Created by: {{ element.user.name + " " + element.user.surname}}</h3>
                             <a href="{{ url_for('user_data', id=element.user.id) }}">
-                                <button class="primary-button">View Profile</button>
+                                <button class="primary-button" aria-label="view profile button">View Profile</button>
                             </a>
                         </section>
-                        <section class="flex-center vote-options-container" >
+                        <section class="flex-center vote-options-container" aria-label="vote dates">
                             <p>{{ element.startDate }} - {{ element.endDate }}</p>
                         </section>
                         <section class="vote-options-container">
                             <h3>Vote options</h3>
                             {% for voteOption in element.options|sort(attribute='name') %}
-                                <ul>
+                                <ul aria-label="vote options">
                                     {% if element.realTimeResults or element.status == "Ended" %}
                                         <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
                                     {% else %}
@@ -89,7 +89,7 @@
                         </section>
                         <section class="vote-options-container">
                             <h3>Description</h3>
-                            <p>{{ element.description[:100] + "..." if element.description|length > 100 else element.description }}</p>
+                            <p aria-label="description">{{ element.description[:100] + "..." if element.description|length > 100 else element.description }}</p>
                         </section>
                         <section class="vote-options-container">
                             <h3>Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
@@ -97,7 +97,7 @@
                         <section class="vote-options-container">
                             <h3>Actions</h3>
                             <section class="flex-center" style="justify-content: space-around;">
-                                <a href="{{ url_for('preview', idVote=element.id, originPage='main_page') }}" class="primary-button">
+                                <a href="{{ url_for('preview', idVote=element.id, originPage='main_page') }}" class="primary-button" aria-label="preview button">
                                     Preview
                                 </a>
                             </section>

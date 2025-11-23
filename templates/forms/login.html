@@ -11,18 +11,18 @@
 
 {% block main %}
 <section class="form-title">
-    <h1 class="secondary-box">Log in</h1>
+    <h1 class="secondary-box" aria-label="form title">Log in</h1>
 </section>
 <form class="card form-card" method="post">
     <section class="input-group">
         <p><i class="fa-solid fa-envelope"></i> email</p>
-        <input type="email" placeholder="e.g. name@domain.com" name="email" aria-label="email-input" value="{{ values.email }}">
+        <input type="email" placeholder="e.g. name@domain.com" name="email" aria-label="email input" value="{{ values.email }}">
     </section>
     <section class="input-group">
         <p><i class="fa-solid fa-key"></i> password</p>
-        <input type="password" placeholder="Enter password" name="password" aria-label="password-input" value="{{ values.password }}">
+        <input type="password" placeholder="Enter password" name="password" aria-label="password input" value="{{ values.password }}">
     </section>
-    <button class="primary-button margin-y" type="submit" aria-label="confirm">
+    <button class="primary-button margin-y" type="submit" aria-label="confirm button">
         <span class="ts-sm" aria-hidden="true">
             Log in
         </span>
@@ -30,15 +30,15 @@
     <section class="errors-container">
         {% if errors %}
             {% for value in errors.values() %}
-            <p class="error-message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
+            <p class="error-message" aria-label="error message"><i class="fa-solid fa-triangle-exclamation"></i> {{ value[0] }}</p>
             {% endfor %}
         {% endif %}
     </section>
 </form>
-<a class="not-having-account" href="{{ url_for('register_user') }}">
+<a class="not-having-account" href="{{ url_for('register_user') }}" aria-label="register hyperlink">
     I don't have a account
 </a>
-<a class="primary-button back-button" href="{{ url_for('main_page') }}">
+<a class="primary-button back-button" href="{{ url_for('main_page') }}" aria-label="back button">
     <span class="ts-sm" aria-hidden="true">
         Back
     </span>

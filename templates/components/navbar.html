@@ -2,61 +2,61 @@
 
 <nav class="navbar" role="navigation">
         {% if session.get('idUser') %}
-                <section class="flex-center" style="column-gap: 2rem;">
-                    <section class="app-logo" aria-label="application-logo">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                    </section>
-                    <section class="links-container">
-                        <a href="{{ url_for('user_data', id=session.get('idUser'))}}">
-                            <button class="primary-button" aria-label="login-button">
-                                <span style="font-size: x-large;" aria-hidden="true">
-                                    Profile
-                                </span>
-                            </button>
-                        </a>
-                        <a href="{{ url_for('votes_page')}}">
-                            <button class="primary-button" aria-label="login-button">
-                                <span style="font-size: x-large;" aria-hidden="true">
-                                    My votes
-                                </span>
-                            </button>
-                        </a>
-                        <a href="{{ url_for('main_page')}}">
-                            <button class="primary-button" aria-label="login-button">
-                                <span style="font-size: x-large;" aria-hidden="true">
-                                    Search votes
-                                </span>
-                            </button>
-                        </a>
-                    </section>
+            <section class="flex-center" style="column-gap: 2rem;">
+                <section class="app-logo" aria-label="application-logo">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
                 </section>
-                <section style="margin-right: 2rem;text-align: center;" class="panel-right">
-                    <span aria-label="idUser" class="id-heading">
-                        Your ID: {{ session.get('idUser') }}
-                    </span>
-                    <a href="{{ url_for('logout_user')}}">
-                        <button class="primary-button" aria-label="login-button">
+                <section class="links-container">
+                    <a href="{{ url_for('user_data', id=session.get('idUser'))}}">
+                        <button class="primary-button" aria-label="profile button">
                             <span style="font-size: x-large;" aria-hidden="true">
-                                Logout
+                                Profile
+                            </span>
+                        </button>
+                    </a>
+                    <a href="{{ url_for('votes_page')}}">
+                        <button class="primary-button" aria-label="my votes button">
+                            <span style="font-size: x-large;" aria-hidden="true">
+                                My votes
+                            </span>
+                        </button>
+                    </a>
+                    <a href="{{ url_for('main_page')}}">
+                        <button class="primary-button" aria-label="search votes button">
+                            <span style="font-size: x-large;" aria-hidden="true">
+                                Search votes
                             </span>
                         </button>
                     </a>
                 </section>
+            </section>
+            <section style="margin-right: 2rem;text-align: center;" class="panel-right">
+                <span aria-label="idUser" class="your id">
+                    Your ID: {{ session.get('idUser') }}
+                </span>
+                <a href="{{ url_for('logout_user')}}">
+                    <button class="primary-button" aria-label="logout button">
+                        <span style="font-size: x-large;" aria-hidden="true">
+                            Logout
+                        </span>
+                    </button>
+                </a>
+            </section>
         {% else %}
-                <section class="flex-center">
-                    <section class="app-logo" aria-label="application-logo">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                    </section>
-                    <h2 class="app-title">E-voting App</h2>
+            <section class="flex-center">
+                <section class="app-logo" aria-label="application-logo">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
                 </section>
-                <section style="margin-right: 1rem;" class="flex-center panel-right">
-                    <a href="{{ url_for('login_user')}}">
-                        <button class="primary-button" aria-label="login-button">
-                            <span style="font-size: x-large;" aria-hidden="true">
-                                Log in
-                            </span>
-                        </button>
-                    </a>
-                </section>
+                <h2 class="app-title">E-voting App</h2>
+            </section>
+            <section style="margin-right: 1rem;" class="flex-center panel-right">
+                <a href="{{ url_for('login_user')}}">
+                    <button class="primary-button" aria-label="login button">
+                        <span style="font-size: x-large;" aria-hidden="true">
+                            Log in
+                        </span>
+                    </button>
+                </a>
+            </section>
         {% endif %}
 </nav>

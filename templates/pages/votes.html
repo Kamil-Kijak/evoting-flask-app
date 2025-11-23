@@ -18,7 +18,7 @@
         <section class="flex-center title-container">
             {% if success %}
                 <section class="margin-y">
-                    <p class="success-message"><i class="fa-solid fa-check"></i> {{ success }}</p>
+                    <p class="success-message" aria-label="success message"><i class="fa-solid fa-check"></i> {{ success }}</p>
                 </section>
             {% endif %}
             <section>
@@ -26,7 +26,7 @@
                 <div class="primary-spliter" aria-label="spliter"></div>
             </section>
             <a href="{{ url_for('creating_vote')}}">
-                <button class="primary-button margin-y">
+                <button class="primary-button margin-y" aria-label="create vote button">
                     <span class="ts-lg" aria-hidden="true">
                         <i class="fa-solid fa-plus"></i> Create vote
                     </span>
@@ -38,8 +38,8 @@
                 <h1>My votes</h1>
                 <div class="primary-spliter" aria-label="spliter"></div>
             </section>
-            <form method="get" action="{{ url_for('votes_page')}}" class="votes-search-form">
-                <button class="primary-button">
+            <form method="get" action="{{ url_for('votes_page')}}" class="votes-search-form" aria-label="search form">
+                <button class="primary-button" aria-label="search button">
                     <span class="ts-md" aria-hidden="true">
                         <i class="fa-solid fa-magnifying-glass"></i> Search
                     </span>
@@ -47,7 +47,7 @@
                 <section class="input-group">
                     <input type="text" name="titleFilter" aria-label="title filter input" placeholder="Filter by title" value="{{ request.args.get('titleFilter', '') }}">
                 </section>
-                <select name="status" class="primary-select">
+                <select name="status" class="primary-select" aria-label="status filter select">
                     <option value="" style="display: none;" >Status filter</option>
                     <option value="" {{ 'selected' if request.args.get("status") == '' }}>None</option>
                     <option value="In progress" {{ 'selected' if request.args.get("status") == 'In progress' }}>In progress</option>
@@ -59,26 +59,26 @@
             {% if votes %}
                 <section style="margin-top: 3rem;margin-bottom: 3rem;" class="votes-grid">
                 {% for element in votes %}
-                    <section class="vote-container">
+                    <section class="vote-container" aria-label="vote">
                         <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
-                            <h3>{{ element.status }}</h3>
+                            <h3 aria-label="vote status">{{ element.status }}</h3>
                         </section>
                         {% if element.status == "Ended" %}
                             <section class="success-message" style="text-align: center;">
-                                <h3>Winner: {{ (element.options|max(attribute='votingCount')).name }}</h3>
+                                <h3 aria-label="vote winner">Winner: {{ (element.options|max(attribute='votingCount')).name }}</h3>
                             </section>
                         {% endif %}
                         <section>
-                            <h2 style="text-align: center;">{{ element.title }}</h2>
+                            <h2 style="text-align: center;" aria-label="vote title">{{ element.title }}</h2>
                             <div class="primary-spliter"></div>
                         </section>
-                        <section class="flex-center vote-options-container">
+                        <section class="flex-center vote-options-container" aria-label="vote dates">
                             <p>{{ element.startDate }} - {{ element.endDate }}</p>
                         </section>
                         <section class="vote-options-container">
                             <h3>Vote options</h3>
                             {% for voteOption in element.options|sort(attribute='name') %}
-                                <ul>
+                                <ul aria-label="vote option">
                                     {% if element.realTimeResults or element.status == "Ended" %}
                                         <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
                                     {% else %}
@@ -89,7 +89,7 @@
                         </section>
                         <section class="vote-options-container">
                             <h3>Description</h3>
-                            <p>{{ element.description[:100] + "..." if element.description|length > 100 else element.description }}</p>
+                            <p aria-label="vote short description">{{ element.description[:100] + "..." if element.description|length > 100 else element.description }}</p>
                         </section>
                         <section class="vote-options-container">
                             <h3>Real time results: {{ 'YES' if element.realTimeResults else 'NO' }}</h3>
@@ -97,10 +97,10 @@
                         <section class="vote-options-container">
                             <h3>Actions</h3>
                             <section class="flex-center" style="justify-content: space-around;">
-                                <a href="{{ url_for('preview', idVote=element.id, originPage='votes_page') }}" class="primary-button">
+                                <a href="{{ url_for('preview', idVote=element.id, originPage='votes_page') }}" class="primary-button" aria-label="preview button">
                                     Preview
                                 </a>
-                                <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button">
+                                <a href="{{ url_for('deleting_vote', idVote=element.id) }}" class="danger-button" aria-label="delete button">
                                     Delete
                                 </a>
                             </section>

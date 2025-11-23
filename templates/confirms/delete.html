@@ -16,7 +16,7 @@
         <h1 class="confirm-heading">Forbidden</h1>
         <h2 class="confirm-subheading">You don't have access to this resource</h2>
         <a href="{{ url_for('votes_page') }}">
-            <button class="primary-button" style="width: 100%;">
+            <button class="primary-button" style="width: 100%;" aria-label="back button">
                 <span class="ts-lg">
                     Back
                 </span>
@@ -28,13 +28,13 @@
         <h1 class="confirm-heading">Confirm delete</h1>
         <h2 class="confirm-subheading">Are you sure?</h2>
         <section class="flex-center confirm-container">
-            <button class="danger-button" type="submit" style="width: 100%;">
+            <button class="danger-button" type="submit" style="width: 100%;" aria-label="option YES">
                 <span class="ts-lg">
                     YES
                 </span>
             </button>
             <a href="{{ url_for('votes_page') }}">
-                <button class="primary-button" style="width: 100%;" type="button">
+                <button class="primary-button" style="width: 100%;" type="button" aria-label="option NO">
                     <span class="ts-lg">
                         NO
                     </span>
