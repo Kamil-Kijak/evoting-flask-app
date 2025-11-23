@@ -57,7 +57,7 @@
             <div class="primary-spliter"></div>
         </section>
         <section class="votes-options">
-            {% for voteOption in vote.options %}
+            {% for voteOption in vote.options|sort(attribute='name') %}
                 {% if vote.realTimeResults or vote.status == "Ended" %}
                     <p><span style="font-weight: bold;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</p>
                 {% else %}

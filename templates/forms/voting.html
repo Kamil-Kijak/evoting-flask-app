@@ -15,7 +15,7 @@
     <h1 class="secondary-box">{{ vote.title }}</h1>
 </section>
 <form class="card form-card" method="post">
-    {% for option in vote.options %}
+    {% for option in vote.options|sort(attribute='name') %}
         <section class="vote-option">
             <h2>{{ option.name }}</h2>
             <button class="primary-button ts-lg" role="submit" name="voteOption" value="{{ option.id }}">

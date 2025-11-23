@@ -15,7 +15,7 @@ from database.models import db
 def main_page():
     id = session.get("idUser")
     if id:
-        statusFilter = request.args.get("statusFilter", 'InProgress')
+        statusFilter = request.args.get("statusFilter", 'In progress')
         titleFilter = request.args.get("titleFilter", '')
         startDateFilter = request.args.get("startDateFilter", '')
         endDateFilter = request.args.get("endDateFilter", '')
@@ -25,8 +25,8 @@ def main_page():
         if endDateFilter:
             votes = votes.filter(Vote.endDate >= endDateFilter)
         votes = votes.all()
+        votes = [vote.to_dict() for vote in votes]
         if statusFilter:
-            votes = [vote.to_dict() for vote in votes]
             votes = [vote for vote in votes if vote["status"] == statusFilter]
         return render_template("pages/main.html", votes=votes)
     else:
@@ -64,13 +64,13 @@ def preview(idVote):
     id = session.get("idUser")
     if id:
         vote = db.session.query(Vote).filter(Vote.id == idVote).first()
-        user = db.session.query(User).filter(User.id == vote.idUser).first()
+        user = db.session.query(User).filter(User.id == id).first()
         if request.method == "POST":
             pass
         else:
             originPage = request.args.get("originPage", "votes_page")
             alreadyVoted = any(any(voting.idVoteOption == option.id for option in vote.options) for voting in user.votings)
-            return render_template("pages/preview.html", vote=vote.to_dict(), user=user.to_dict(), originPage=originPage, alreadyVoted=alreadyVoted)
+            return render_template("pages/preview.html", vote=vote.to_dict(), user=vote.user.to_dict(), originPage=originPage, alreadyVoted=alreadyVoted)
     else:
         return redirect(url_for("welcome_page"))
 
@@ -269,7 +269,7 @@ def user_data(id):
     if session.get("idUser"):
         user = db.session.query(User).filter(User.id == id).first()
         if user:
-            return render_template("pages/user.html", found=True, permission=user.id == id, user=user)
+            return render_template("pages/user.html", found=True, permission=session.get("idUser") == id, user=user)
         else:
             return render_template("pages/user.html", found=False)
     else:
