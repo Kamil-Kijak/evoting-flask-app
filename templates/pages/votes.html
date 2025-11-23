@@ -56,13 +56,18 @@
                 </select>
             </form>
         </section>
-        <section style="margin-top: 3rem;margin-bottom: 3rem;" class="votes-grid">
             {% if votes %}
+                <section style="margin-top: 3rem;margin-bottom: 3rem;" class="votes-grid">
                 {% for element in votes %}
                     <section class="vote-container">
                         <section class="{{ 'success-message' if element.status == 'In progress' else 'warning-message' if element.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
                             <h3>{{ element.status }}</h3>
                         </section>
+                        {% if element.status == "Ended" %}
+                            <section class="success-message" style="text-align: center;">
+                                <h3>Winner: {{ (element.options|max(attribute='votingCount')).name }}</h3>
+                            </section>
+                        {% endif %}
                         <section>
                             <h2 style="text-align: center;">{{ element.title }}</h2>
                             <div class="primary-spliter"></div>
@@ -74,7 +79,7 @@
                             <h3>Vote options</h3>
                             {% for voteOption in element.options %}
                                 <ul>
-                                    {% if element.realTimeResults or element.status == "ended" %}
+                                    {% if element.realTimeResults or element.status == "Ended" %}
                                         <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span> votes: {{ voteOption.votingCount }}</li>
                                     {% else %}
                                         <li><span style="font-weight: 700;">{{ voteOption.name[:30] + "..." if voteOption.name|length > 30 else voteOption.name }}</span></li>
@@ -102,10 +107,10 @@
                         </section>
                     </section>
                 {% endfor %}
+            </section>
             {% else %}
-                <h1>You have nothing there!</h1>
+                <h1 style="text-align: center;margin-top: 3rem;">You have nothing there!</h1>
             {% endif %}
-        </section>
     </section>
 
 {% endblock %}

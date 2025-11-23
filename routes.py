@@ -25,7 +25,7 @@ def voting(idVote):
         user = db.session.query(User).filter(User.id == id).first()
         vote = db.session.query(Vote).filter(Vote.id == idVote).first()
         alreadyVoted = any(any(voting.idVoteOption == option.id for option in vote.options) for voting in user.votings)
-        if not (alreadyVoted or vote.endDate <= datetime.datetime.today()):
+        if not (alreadyVoted or vote.endDate <= datetime.datetime.today() or vote.startDate > datetime.datetime.today()):
             if request.method == "POST":
                 data = request.form.to_dict()
                 chosenOption = data.get("voteOption")

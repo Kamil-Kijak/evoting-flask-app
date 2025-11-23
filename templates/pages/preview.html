@@ -27,9 +27,14 @@
             </a>
         </section>
         <section class="dates-container">
-            <section class="{{ 'success-message' if vote.status == 'In progress' else 'warning-message' if vote.status == 'Waiting' else 'error-message' }}" style="text-align: center;">
+            <section class="{{ 'success-message' if vote.status == 'In progress' else 'warning-message' if vote.status == 'Waiting' else 'error-message' }}">
                 <h3>{{ vote.status }}</h3>
             </section>
+            {% if vote.status == "Ended" %}
+                <section class="success-message">
+                    <h3>Winner: {{ (vote.options|max(attribute='votingCount')).name }}</h3>
+                </section>
+            {% endif %}
             <section class="flex-center">
                 <p>Start date: {{ vote.startDate }}</p>
                 <p>End date: {{ vote.endDate }}</p>
@@ -53,30 +58,42 @@
         </section>
         <section class="votes-options">
             {% for voteOption in vote.options %}
-                {% if vote.realTimeResults or vote.status == "ended" %}
+                {% if vote.realTimeResults or vote.status == "Ended" %}
                     <p><span style="font-weight: bold;">{{ voteOption.name }}</span> votes: {{ voteOption.votingCount }}</p>
                 {% else %}
                     <p><span style="font-weight: bold;"><i class="fa-solid fa-lock"></i> {{ voteOption.name }}</span>  results hidden</p>
                 {% endif %}
             {% endfor %}
         </section>
-        {% if not (vote.realTimeResults or vote.status == "ended") %}
+        {% if not (vote.realTimeResults or vote.status == "Ended") %}
             <p class="results-info-tip" style="font-weight: bold;margin-top: 2rem;">*Vote results will be displayed when voting has ended*</p>
         {% endif %}
-        {% if not alreadyVoted %}
-            <section class="error-message" style="margin-top: 1rem;">
-                You haven't voted yet!
-            </section>
-            <a href="{{ url_for('voting', idVote=vote.id)}}">
-                <button class="primary-button back-button">
-                    <span class="ts-xl">
-                        Vote!
-                    </span>
-                </button>
-            </a>
+        {% if not vote.status == "Ended" %}
+            {% if not vote.status == "Waiting" %}
+                {% if not alreadyVoted %}
+                    <section class="error-message" style="margin-top: 1rem;">
+                        You haven't voted yet!
+                    </section>
+                    <a href="{{ url_for('voting', idVote=vote.id)}}">
+                        <button class="primary-button back-button">
+                            <span class="ts-xl">
+                                Vote!
+                            </span>
+                        </button>
+                    </a>
+                {% else %}
+                    <section class="success-message" style="margin-top: 1rem;">
+                        You already voted!
+                    </section>
+                {% endif %}
+            {% else %}
+                <section class="warning-message" style="margin-top: 1rem;">
+                    Voting haven't started yet!
+                </section>
+            {% endif %}
         {% else %}
-            <section class="success-message" style="margin-top: 1rem;">
-                You already voted!
+            <section class="error-message" style="margin-top: 1rem;">
+                Voting already ended!
             </section>
         {% endif %}
         <a href="{{ url_for(originPage)}}">
