@@ -41,8 +41,8 @@ changingUserDataSchema = ChangingUserDataSchema()
 
 class VoteSchema(Schema):
     voteTitle = fields.String(required=True, validate=validate.Length(min=1, max=50, error="vote title length between 1 and 50"), error_messages={"required":"vote title is required"})
-    startDate = fields.Date(required=True, error_messages={"required":"start date is required", "invalid" : "start date is invalid"})
-    endDate = fields.Date(required=True, error_messages={"required":"end date is required", "invalid" : "end date is invalid"})
+    startDate = fields.DateTime(required=True, error_messages={"required":"start date is required", "invalid" : "start date is invalid"})
+    endDate = fields.DateTime(required=True, error_messages={"required":"end date is required", "invalid" : "end date is invalid"})
     description = fields.String(required=True, validate=validate.Length(min=1, max=65535, error="description length between 1 and 65535"), error_messages={"required":"description is required"})
     realTimeResults = fields.Boolean(required=False)
     voteOptions = fields.List(
@@ -60,12 +60,12 @@ class VoteSchema(Schema):
 
     @validates("startDate")
     def validate_start_date(self, value, **kwargs):
-        if value < datetime.date.today():
+        if value < datetime.datetime.today():
             raise ValidationError("start date can't be in past")
         
     @validates("endDate")
     def validate_end_date(self, value, **kwargs):
-        if value < datetime.date.today():
+        if value < datetime.datetime.today():
             raise ValidationError("end date can't be in past")
         
     @validates_schema

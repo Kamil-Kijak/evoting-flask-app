@@ -13,9 +13,24 @@ from database.models import db
 
 @app.route("/")
 def main_page():
-    if not session.get("idUser"):
+    id = session.get("idUser")
+    if id:
+        statusFilter = request.args.get("statusFilter", 'InProgress')
+        titleFilter = request.args.get("titleFilter", '')
+        startDateFilter = request.args.get("startDateFilter", '')
+        endDateFilter = request.args.get("endDateFilter", '')
+        votes = db.session.query(Vote).filter(Vote.title.like(f"%{titleFilter}%"))
+        if startDateFilter:
+            votes = votes.filter(Vote.startDate <= startDateFilter)
+        if endDateFilter:
+            votes = votes.filter(Vote.endDate >= endDateFilter)
+        votes = votes.all()
+        if statusFilter:
+            votes = [vote.to_dict() for vote in votes]
+            votes = [vote for vote in votes if vote["status"] == statusFilter]
+        return render_template("pages/main.html", votes=votes)
+    else:
         return redirect(url_for("welcome_page"))
-    return render_template("pages/main.html")
 
 
 @app.route("/voting/<idVote>", methods=["GET", "POST"])

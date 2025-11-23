@@ -55,12 +55,13 @@ class Vote(db.Model):
         return {
             "id":self.id,
             "title":self.title,
-            "startDate":self.startDate.strftime("%d.%m.%Y"),
-            "endDate":self.endDate.strftime("%d.%m.%Y"),
+            "startDate":self.startDate.strftime("%d.%m.%Y %H:%M"),
+            "endDate":self.endDate.strftime("%d.%m.%Y %H:%M"),
             "description":self.description,
             "realTimeResults":self.realTimeResults,
             "options":[option.to_dict() for option in self.options],
             "idUser":self.idUser,
+            "user":self.user,
             "status":"Waiting" if self.startDate > datetime.today() else "Ended" if self.endDate < datetime.today() else "In progress"
         }
     
