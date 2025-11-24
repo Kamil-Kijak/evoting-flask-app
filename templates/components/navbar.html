@@ -31,7 +31,7 @@
                 </section>
             </section>
             <section style="margin-right: 2rem;text-align: center;" class="panel-right">
-                <span aria-label="idUser" class="your id">
+                <span aria-label="idUser" style="font-weight: bold;">
                     Your ID: {{ session.get('idUser') }}
                 </span>
                 <a href="{{ url_for('logout_user')}}">

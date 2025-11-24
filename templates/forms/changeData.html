@@ -23,9 +23,13 @@
         <p><i class="fa-solid fa-user"></i> Surname</p>
         <input type="text" placeholder="new surname" name="surname" aria-label="surname input" value="{{ values.surname }}">
     </section>
+    <section class="input-group">
+        <p><i class="fa-solid fa-file"></i> Description</p>
+        <textarea type="text" placeholder="profile description" name="profileDescription" aria-label="profile description input">{{ values.profileDescription }}</textarea>
+    </section>
     <button class="primary-button" style="margin-top: 1rem;" type="submit" aria-label="confirm button">
         <span class="ts-sm" aria-hidden="true">
-            Change name and surname
+            Change data
         </span>
     </button>
     <section class="errors-container">

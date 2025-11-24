@@ -55,6 +55,9 @@
                 <h2 class="ts-lg" aria-label="user email">{{ user.email }}</h2>
             </section>
         </section>
+        <p class="description">
+            {{ user.profileDescription }}
+        </p>
         {% if permission %}
         <section class="margin-y">
             <h1 aria-label="error heading">Profile options</h1>
@@ -78,7 +81,7 @@
             <a href="{{ url_for('changing_data') }}">
                 <button class="secondary-button" aria-label="change name, surname button">
                     <span aria-hidden="true" class="ts-xl">
-                        <i class="fa-solid fa-user"></i> Change name, surname
+                        <i class="fa-solid fa-user"></i> Change user data
                     </span>
                 </button>
             </a>

@@ -19,6 +19,7 @@ class User(db.Model):
     id = db.Column(db.String(21), primary_key=True, default=generateNanoId)
     name = db.Column(db.String(50), nullable=False)
     surname = db.Column(db.String(50), nullable=False)
+    profileDescription = db.Column(db.String(500), nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     votes = db.relationship('Vote', backref='user', lazy=True, passive_deletes=True)
@@ -34,7 +35,8 @@ class User(db.Model):
             "surname":self.surname,
             "email":self.email,
             "votes":[vote.to_dict() for vote in self.votes],
-            "votings":self.votings
+            "votings":self.votings,
+            "profileDescription":self.profileDescription if self.profileDescription != None and self.profileDescription != "" else "No description"
         }
 
 class Vote(db.Model):

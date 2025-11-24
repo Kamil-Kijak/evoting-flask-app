@@ -222,7 +222,7 @@ def changing_password():
             db.session.query(User).filter(User.id == id).update({User.password: hash.decode()})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing password success")
+            return redirect(url_for("user_data", id=user.id, success="Changing password succeed"))
         else:
             return render_template("forms/changePassword.html", values={})
     else:
@@ -243,7 +243,7 @@ def changing_email():
             db.session.query(User).filter(User.id == id).update({User.email: data.get("email")})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing email success")
+            return redirect(url_for("user_data", id=user.id, success="Changing email succeed"))
         else:
             user = db.session.query(User).filter(User.id == id).first()
             return render_template("forms/changeEmail.html", values={"email":user.email})
@@ -260,13 +260,13 @@ def changing_data():
                 changingUserDataSchema.load(data)
             except ValidationError as err:
                 return render_template("forms/changeData.html", errors=err.messages, values=data)
-            db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname")})
+            db.session.query(User).filter(User.id == id).update({User.name: data.get("name"), User.surname: data.get("surname"), User.profileDescription: data.get("profileDescription")})
             db.session.commit()
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("pages/user.html", found=True, permission=user.id == id, user=user, success="Changing name & surname success")
+            return redirect(url_for("user_data", id=user.id, success="Changing name, surname and description succeed"))
         else:
             user = db.session.query(User).filter(User.id == id).first()
-            return render_template("forms/changeData.html", values={"name":user.name, "surname":user.surname})
+            return render_template("forms/changeData.html", values={"name":user.name, "surname":user.surname, "profileDescription":user.profileDescription})
     else:
         return redirect(url_for("main_page"))
     
@@ -275,7 +275,8 @@ def user_data(id):
     if session.get("idUser"):
         user = db.session.query(User).filter(User.id == id).first()
         if user:
-            return render_template("pages/user.html", found=True, permission=session.get("idUser") == id, user=user)
+            success = request.args.get("success", "")
+            return render_template("pages/user.html", found=True, permission=session.get("idUser") == id, user=user.to_dict(), success=success)
         else:
             return render_template("pages/user.html", found=False)
     else:

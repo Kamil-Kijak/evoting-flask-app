@@ -36,6 +36,7 @@ changingEmailSchema = ChangingEmailSchema()
 class ChangingUserDataSchema(Schema):
     name = fields.String(required=True, validate=validate.Length(min=1, max=50, error="Name length between 1 and 50"), error_messages={"required":"Name is required"})
     surname = fields.String(required=True, validate=validate.Length(min=1, max=50, error="Surname length between 1 and 50"), error_messages={"required":"Surname is required"})
+    profileDescription = fields.String(required=True, validate=validate.Length(min=0, max=500, error="Description max length: 500"), error_messages={"required":"Description is required"})
 
 changingUserDataSchema = ChangingUserDataSchema()
 
