@@ -19,14 +19,20 @@ def main_page():
         titleFilter = request.args.get("titleFilter", '')
         startDateFilter = request.args.get("startDateFilter", '')
         endDateFilter = request.args.get("endDateFilter", '')
-        votes = db.session.query(Vote).filter(Vote.title.like(f"%{titleFilter}%"))
+        userDataFilter = request.args.get("userDataFilter", '')
+        userData = userDataFilter.split(" ")
+        votes = db.session.query(Vote).join(User).filter(Vote.title.like(f"%{titleFilter}%"))
+        if len(userData) > 0:
+            votes = votes.filter(User.name.like(f"%{userData[0]}%"))
+        if len(userData) > 1:
+            votes = votes.filter(User.surname.like(f"%{userData[1]}%"))
         if startDateFilter:
             votes = votes.filter(Vote.startDate <= startDateFilter)
         if endDateFilter:
             votes = votes.filter(Vote.endDate >= endDateFilter)
         votes = votes.all()
         votes = [vote.to_dict() for vote in votes]
-        if statusFilter:
+        if statusFilter != "All":
             votes = [vote for vote in votes if vote["status"] == statusFilter]
         return render_template("pages/main.html", votes=votes)
     else:

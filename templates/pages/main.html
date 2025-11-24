@@ -31,6 +31,7 @@
                     <option value="In progress" {{ 'selected' if request.args.get("statusFilter") == 'In progress' or request.args.get("statusFilter") == '' }}>In progress</option>
                     <option value="Waiting" {{ 'selected' if request.args.get("statusFilter") == 'Waiting' }}>Waiting</option>
                     <option value="Ended" {{ 'selected' if request.args.get("statusFilter") == 'Ended' }}>Ended</option>
+                    <option value="All" {{ 'selected' if request.args.get("statusFilter") == 'All' }}>All</option>
                 </select>
             </section>
             <section class="input-group">
@@ -40,6 +41,10 @@
             <section class="input-group">
                 <p>Before end date</p>
                 <input type="datetime-local" name="endDateFilter" aria-label="end date before input" value="{{ request.args.get('endDateFilter', '') }}">
+            </section>
+            <section class="input-group">
+                <p>Creator name & surname</p>
+                <input type="text" placeholder="filter by name & surname" name="userDataFilter" aria-label="name & surname filter" value="{{ request.args.get('userDataFilter', '') }}">
             </section>
         </section>
         <section class="flex-center">
