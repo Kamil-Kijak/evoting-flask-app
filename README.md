@@ -34,7 +34,7 @@ or
 ```
 source venv/bin/activate
 ```
-- Install install important ```modules``` from *requirements.txt* file using:
+- Install install necessary ```modules``` from *requirements.txt* file using:
 ```
 pip install -r requirements.txt
 ```
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 python app.py
 ```
-Server will host project default port ```3000``` or you can also configure this   
+Server will host project on default port ```3000``` or you can also configure this port  
 ## 🖋️ Project config
 ```.env``` file structure  
 ``` .env
